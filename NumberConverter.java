@@ -20,17 +20,26 @@ public class NumberConverter {
             exit("Invalid Base.");
         } else if (cCase == 0) {
             exit("Base of input and output are the same.");
-        } else {
-            int iBase = convertBase(inputBasis);
-            int oBase = convertBase(outputBasis);
         }
 
-        System.out.print("\nNumber: ");
-        String number = scanner.nextLine();
+        System.out.print("\nInput number: ");
+        String iNumber = scanner.nextLine();
+        String oNumber = null;
+        int iBase = convertBase(inputBasis);
+        int oBase = convertBase(outputBasis);
 
         if(cCase == 1){
-            
+            oNumber = converter(iNumber, iBase, oBase);
+        } else if(cCase == 2){
+            String temp = converter(iNumber, iBase, 10);
+            oNumber = converter(temp, 10, oBase);
         }
+
+        System.out.print("\nOutput number: " + oNumber);
+    }
+
+    public static String converter(String num, int iB, int oB){
+        
     }
 
     public static boolean baseValidation(String base) {
@@ -65,10 +74,6 @@ public class NumberConverter {
             default ->
                 0;
         };
-    }
-
-    public static String converter(String num, int iBase, int oBase, int cCase){
-        
     }
 
     public static void exit(String reason) {
