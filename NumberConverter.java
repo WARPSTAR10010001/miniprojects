@@ -12,30 +12,33 @@ public class NumberConverter {
 
         System.out.print("Enter numerical base of the input: ");
         String inputBasis = scanner.nextLine();
-        boolean inputIsValid = baseValidation(inputBasis);
         System.out.print("Enter numerical base of the output: ");
         String outputBasis = scanner.nextLine();
-        boolean outputIsValid = baseValidation(outputBasis);
         int cCase = baseCheck(inputBasis, outputBasis);
 
-        if(inputIsValid == false || outputIsValid == false){
+        if (baseValidation(inputBasis) == false || baseValidation(outputBasis) == false) {
             exit("Invalid Base.");
-        } else if (cCase == 0){
+        } else if (cCase == 0) {
             exit("Base of input and output are the same.");
         } else {
             int iBase = convertBase(inputBasis);
             int oBase = convertBase(outputBasis);
         }
-        
 
         System.out.print("\nNumber: ");
         String number = scanner.nextLine();
+
+        if(cCase == 1){
+            
+        }
     }
 
-    public static boolean baseValidation(String base){
+    public static boolean baseValidation(String base) {
         return switch (base) {
-            case "2", "bin", "8", "oct", "10", "dec", "16", "hex" -> true;
-            default -> false;
+            case "2", "bin", "8", "oct", "10", "dec", "16", "hex" ->
+                true;
+            default ->
+                false;
         };
     }
 
@@ -51,15 +54,24 @@ public class NumberConverter {
 
     public static int convertBase(String base) {
         return switch (base) {
-            case "2", "bin" -> 2;
-            case "8", "oct" -> 8;
-            case "10", "dec" -> 10;
-            case "16", "hex" -> 16;
-            default -> 0;
+            case "2", "bin" ->
+                2;
+            case "8", "oct" ->
+                8;
+            case "10", "dec" ->
+                10;
+            case "16", "hex" ->
+                16;
+            default ->
+                0;
         };
     }
 
-    public static void exit(String reason){
+    public static String converter(String num, int iBase, int oBase, int cCase){
+        
+    }
+
+    public static void exit(String reason) {
         System.out.print("\nError: " + reason);
         System.exit(0);
     }
