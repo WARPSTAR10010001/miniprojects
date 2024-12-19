@@ -11,9 +11,9 @@ public class NumberConverter {
         System.out.println("Available numerical basis: bin, oct, dec, hex\n");
 
         System.out.print("Enter numerical base of the input: ");
-        String inputBasis = scanner.nextLine();
+        String inputBasis = (scanner.nextLine()).toLowerCase();
         System.out.print("Enter numerical base of the output: ");
-        String outputBasis = scanner.nextLine();
+        String outputBasis = (scanner.nextLine()).toLowerCase();
         int cCase = baseCheck(inputBasis, outputBasis);
 
         if (baseValidation(inputBasis) == false || baseValidation(outputBasis) == false) {
@@ -23,23 +23,28 @@ public class NumberConverter {
         }
 
         System.out.print("\nInput number: ");
-        String iNumber = scanner.nextLine();
+        String iNumber = (scanner.nextLine()).toUpperCase();
         String oNumber = null;
+
         int iBase = convertBase(inputBasis);
         int oBase = convertBase(outputBasis);
 
-        if(cCase == 1){
+        if(numIsValid(iNumber, iBase) == false) {
+            exit("Input number is invalid.");
+        }
+
+        if (cCase == 1) {
             oNumber = converter(iNumber, iBase, oBase);
-        } else if(cCase == 2){
+        } else if (cCase == 2) {
             String temp = converter(iNumber, iBase, 10);
             oNumber = converter(temp, 10, oBase);
         }
 
-        System.out.print("\nOutput number: " + oNumber);
+        System.out.print("Output number: " + oNumber);
     }
 
-    public static String converter(String num, int iB, int oB){
-        
+    public static String converter(String num, int iB, int oB) {
+        return "Test";
     }
 
     public static boolean baseValidation(String base) {
@@ -74,6 +79,23 @@ public class NumberConverter {
             default ->
                 0;
         };
+    }
+
+    public static boolean numIsValid(String num, int base) {
+        if(base == 2){
+            for(int i = 0; i < num.length(); i++){
+                if(num.charAt(i) != '0' || num.charAt(i) != '1'){
+                    return false;
+                }
+            }
+        } else if (base == 8){
+            for(int i = 0; i < num.length(); i++){
+                if(num.charAt(i) != '0' || num.charAt(i) != '1' || num.charAt(i) != '2' || num.charAt(i) != '3' || num.charAt(i) != '4' || num.charAt(i) != '5' || num.charAt(i) != '6' || num.charAt(i) != '7'){
+                    return false;
+                }
+            }
+        }
+        return true;        
     }
 
     public static void exit(String reason) {
