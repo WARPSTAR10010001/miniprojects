@@ -14,6 +14,7 @@ public class NumberConverter {
         String inputBasis = (scanner.nextLine()).toLowerCase();
         System.out.print("Enter numerical base of the output: ");
         String outputBasis = (scanner.nextLine()).toLowerCase();
+
         int cCase = baseCheck(inputBasis, outputBasis);
 
         if (baseValidation(inputBasis) == false || baseValidation(outputBasis) == false) {
@@ -29,15 +30,14 @@ public class NumberConverter {
         int iBase = convertBase(inputBasis);
         int oBase = convertBase(outputBasis);
 
-        if(numIsValid(iNumber, iBase) == false) {
+        if (iNumber.length() == 0 || numIsValid(iNumber, iBase) == false) {
             exit("Input number is invalid.");
         }
 
         if (cCase == 1) {
             oNumber = converter(iNumber, iBase, oBase);
         } else if (cCase == 2) {
-            String temp = converter(iNumber, iBase, 10);
-            oNumber = converter(temp, 10, oBase);
+            oNumber = converter(converter(iNumber, iBase, 10), 10, oBase);
         }
 
         System.out.print("Output number: " + oNumber);
@@ -58,11 +58,11 @@ public class NumberConverter {
 
     public static int baseCheck(String input, String output) {
         if (output.equals(input) || input.equals(output)) {
-            return 0;           //0 = base of input & output is the same
+            return 0;
         } else if (input.equals("10") || input.equals("dec") || output.equals("10") || output.equals("dec")) {
-            return 1;           //1 = base of input / output is decimal
+            return 1;
         } else {
-            return 2;           //2 = base of input & output is not decimal
+            return 2;
         }
     }
 
@@ -82,20 +82,40 @@ public class NumberConverter {
     }
 
     public static boolean numIsValid(String num, int base) {
-        if(base == 2){
-            for(int i = 0; i < num.length(); i++){
-                if(num.charAt(i) != '0' || num.charAt(i) != '1'){
-                    return false;
+        switch (base) {
+            case 2 -> {
+                for (int i = 0; i < num.length(); i++) {
+                    if (num.charAt(i) != '0' && num.charAt(i) != '1') {
+                        return false;
+                    }
                 }
             }
-        } else if (base == 8){
-            for(int i = 0; i < num.length(); i++){
-                if(num.charAt(i) != '0' || num.charAt(i) != '1' || num.charAt(i) != '2' || num.charAt(i) != '3' || num.charAt(i) != '4' || num.charAt(i) != '5' || num.charAt(i) != '6' || num.charAt(i) != '7'){
-                    return false;
+            case 8 -> {
+                for (int i = 0; i < num.length(); i++) {
+                    if (num.charAt(i) != '0' && num.charAt(i) != '1' && num.charAt(i) != '2' && num.charAt(i) != '3' && num.charAt(i) != '4' && num.charAt(i) != '5' && num.charAt(i) != '6' && num.charAt(i) != '7') {
+                        return false;
+                    }
                 }
+            }
+            case 10 -> {
+                for (int i = 0; i < num.length(); i++) {
+                    if (num.charAt(i) != '0' && num.charAt(i) != '1' && num.charAt(i) != '2' && num.charAt(i) != '3' && num.charAt(i) != '4' && num.charAt(i) != '5' && num.charAt(i) != '6' && num.charAt(i) != '7' && num.charAt(i) != '8' && num.charAt(i) != '9') {
+                        return false;
+                    }
+                }
+            }
+            case 16 -> {
+                for (int i = 0; i < num.length(); i++) {
+                    if (num.charAt(i) != '0' && num.charAt(i) != '1' && num.charAt(i) != '2' && num.charAt(i) != '3' && num.charAt(i) != '4' && num.charAt(i) != '5' && num.charAt(i) != '6' && num.charAt(i) != '7' && num.charAt(i) != '8' && num.charAt(i) != '9' && num.charAt(i) != 'A' && num.charAt(i) != 'B' && num.charAt(i) != 'C' && num.charAt(i) != 'D' && num.charAt(i) != 'E' && num.charAt(i) != 'F') {
+                        return false;
+                    }
+                }
+            }
+            default -> {
+                return false;
             }
         }
-        return true;        
+        return true;
     }
 
     public static void exit(String reason) {
