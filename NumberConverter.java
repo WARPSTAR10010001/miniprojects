@@ -23,7 +23,7 @@ public class NumberConverter {
             exit("Base of input and output are the same.");
         }
 
-        System.out.print("\nInput number: ");
+        System.out.print("\nInput number:  ");
         String iNumber = (scanner.nextLine()).toUpperCase();
         String oNumber = null;
 
@@ -44,7 +44,18 @@ public class NumberConverter {
     }
 
     public static String converter(String num, int iB, int oB) {
-        return "Test";
+        int decimalValue;
+        if (iB == 10) {
+            decimalValue = Integer.parseInt(num);
+        } else {
+            decimalValue = Integer.parseInt(num, iB);
+        }
+
+        if (oB == 10) {
+            return Integer.toString(decimalValue);
+        }
+
+        return Integer.toString(decimalValue, oB).toUpperCase();
     }
 
     public static boolean baseValidation(String base) {
