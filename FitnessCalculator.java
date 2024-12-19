@@ -28,22 +28,26 @@ public class FitnessCalculator {
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
 
-		if (selection == 0) {
-			System.out.print(exit);
-			System.exit(0);
-		} else if (selection == 1) {
-			System.out.println("\n" + divider + "\n");
-			bmi();
-		} else if (selection == 2) {
-			System.out.println("\n" + divider + "\n");
-			whr();
-		} else if (selection == 3) {
-			System.out.println("\n" + divider + "\n");
-			wcr();
-		} else {
-			System.out.print("\nInvalid selection.");
-			System.exit(0);
-		}
+        switch(selection){
+            case 0:
+            System.out.print(exit);
+            System.exit(0);
+            case 1:
+            System.out.println("\n" + divider + "\n");
+            bmi();
+            break;
+            case 2:
+            System.out.println("\n" + divider + "\n");
+            whr();
+            break;
+            case 3:
+            System.out.println("\n" + divider + "\n");
+            wcr();
+            break;
+            default:
+            System.out.print("\nInvalid selection.");
+            System.exit(0);
+        }
 	}
 
 	public static void continueSelection() {
