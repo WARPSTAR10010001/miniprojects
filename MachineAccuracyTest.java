@@ -4,9 +4,9 @@
 
 public class MachineAccuracyTest {
     public static void main(String[] args) {
-		//test1(); 	//general test for machine accuracy (double-type)
+		test1(); 	//general test for machine accuracy (double-type)
 		//test2();	//general test for machine accuracy (float-type)
-		//test3(); 	// test with a specific float value
+		//test3(); 	//test with a specific float value
 		//test4(); 	//0.1 + 0.2 test (with formatting)
 	}
 	
