@@ -2,12 +2,12 @@
 
 import java.util.Scanner;
 
-public class SquareNumber {
+public class SquareWithRecursion {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        scanner.close();
         System.out.print("Number: ");
         int n = scanner.nextInt();
+        scanner.close();
         System.out.print(recursive(n));
     }
 
