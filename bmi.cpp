@@ -25,9 +25,11 @@ int main() {
         double bmiResult;
         bmiResult = bmi();
         cout<<"Your BMI is: "<<bmiResult<<".";
+        return 0;
     } else {
         cout<<"erm what the sigma";
+        return 1;
     }
-    
-    return 0;
+
+    return 1;
 }
