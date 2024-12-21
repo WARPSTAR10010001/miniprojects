@@ -1,6 +1,7 @@
 
 .vscode/tasks.json
-bmi.exe
+BMI.exe
 PrimeChecker.exe
 Calculator.exe
 CheckPrime.exe
+Random.exe
