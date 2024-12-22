@@ -30,6 +30,8 @@ public class GuessingGame {
         } else {
             System.out.print("take a shower plz, FUCKER");
         }
+
+        scanner.close();
     }
 
     public static String[] affirmations(){
