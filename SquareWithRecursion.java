@@ -11,7 +11,7 @@ public class SquareWithRecursion {
         System.out.print(recursive(n));
     }
 
-    public static int recursive(int n){
+    public static int recursive(int n){ // 3
         if(n == 1){
             return 1;
         } else {
