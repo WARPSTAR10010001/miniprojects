@@ -106,6 +106,7 @@ public class TicTacToe {
                 }
             }
         }
+        
         //checks columns
         for(int i = 0; i < court.length; i = i + 2){
             if(court[0][i] != ' ' && court[2][i] != ' ' && court[4][i] != ' '){
