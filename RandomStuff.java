@@ -8,7 +8,6 @@ public class RandomStuff {
     static String divider = "----------------------------------------";
     public static void main(String[] args){
         System.out.println("+++RANDOM STUFF+++");
-
         selection(true);
     }
 
