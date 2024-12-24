@@ -113,22 +113,26 @@ public class TicTacToe {
     public static char[][] courtBlueprint(){
         char[][] court = new char[5][5];
 
-        for(int i = 0; i < court.length; i++){
-            if(i % 2 == 1){
-                for(int j = 0; j < court[i].length; j++){
-                    court[i][j] = '-';
-                }
-            } else {
-                for(int j = 0; j < court[i].length; j++){
-                    if(j % 2 == 1){
-                        court[i][j] = '|';
-                    } else {
-                        court[i][j] = ' ';
+        if(!useUpdatedPrinter){
+            for(int i = 0; i < court.length; i++){
+                if(i % 2 == 1){
+                    for(int j = 0; j < court[i].length; j++){
+                        court[i][j] = '-';
+                    }
+                } else {
+                    for(int j = 0; j < court[i].length; j++){
+                        if(j % 2 == 1){
+                            court[i][j] = '|';
+                        } else {
+                            court[i][j] = ' ';
+                        }
                     }
                 }
             }
+        } else {
+            // code new visually updated printer for court
         }
-
+        
         return court;
     }
 
@@ -197,7 +201,6 @@ public class TicTacToe {
 
     public static int[] calcPos(){
         int[] posArray = new int[2];
-
 
         return posArray;
     }
