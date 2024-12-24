@@ -2,6 +2,7 @@
 
 //Maybe include option to play with the program someday?
 //Maybe even let player customize the intelligence of the program [n = [1|10]; n/10 chance to make a right move]
+
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -14,13 +15,27 @@ public class TicTacToe {
     //Settings:
     static char player0 = 'O';
     static char player1 = 'X';
+    static char playerAI = '+';
     static boolean startPlayer0 = true;
     static String winningMessage = "You Won! Congrats!";
+    static boolean playWithAI = false;
+    static boolean startWithAI = false;
+
+    //Developement variables:
+    static boolean useUpdatedPrinter = false;
 
     public static void main(String[] args){
         System.out.println("+++TIC TAC TOE+++\n");
 
-        System.out.print("Edit settings? [0/1]: ");
+        System.out.println(divider + "\n\n++MENU++\n");
+
+        System.out.print("[WIP] Play with AI? [0/1]: ");
+        if(scanner.nextInt() == 1){
+            playWithAI = true;
+        }
+        System.out.println("playWithAI: " + playWithAI); //add proper player feedback
+
+        System.out.print("\nEdit settings? [0/1]: ");
         if(scanner.nextInt() == 1){
             editSettings();
         }
@@ -33,33 +48,62 @@ public class TicTacToe {
 
         if(startPlayer0){
             movePlayer0(court);
-        } else {
+        } else if (!startPlayer0 && !startWithAI) {
             movePlayer1(court);
+        } else if (startWithAI && !startPlayer0){
+            moveAI(court);
         }
     }
 
     public static void editSettings(){
         System.out.println("\n" + divider + "\n\n++SETTINGS++\n");
-        System.out.print("Edit Player letters? [0/1]: ");
-        if(scanner.nextInt() == 1){
-            scanner.nextLine();
-            System.out.print("  Enter letter for the 1st player [default: O]: ");
-            String temp = scanner.nextLine();
-            player0 = temp.charAt(0);
-            System.out.print("  Enter letter for the 2nd player [default: X]: ");
-            temp = scanner.nextLine();
-            player1 = temp.charAt(0);
+        if(!playWithAI){
+            System.out.print("Edit Player letters? [0/1]: ");
+            if(scanner.nextInt() == 1){
+                scanner.nextLine();
+                System.out.print("  Enter letter for the 1st player [default: O]: ");
+                String temp = scanner.nextLine();
+                player0 = temp.charAt(0);
+                System.out.print("  Enter letter for the 2nd player [default: X]: ");
+                temp = scanner.nextLine();
+                if(temp.charAt(0) == player0){
+                    exit(true, "Can't have two players with the same character");
+                }
+                player1 = temp.charAt(0);
+            }
+        } else {
+            System.out.print("Edit Player letter? [0/1]: ");
+            if(scanner.nextInt() == 1){
+                scanner.nextLine();
+                System.out.print("  Enter custom letter [default: O]: ");
+                String temp = scanner.nextLine();
+                if(temp.charAt(0) == playerAI){
+                    exit(true, "Can't have two players with the same character");
+                }
+                player0 = temp.charAt(0);
+            }
         }
-        System.out.print("Start with player [0/1]: ");
-        if(scanner.nextInt() == 1){
-            startPlayer0 = false;
+
+        if(playWithAI){
+            System.out.print("Start with AI? [0/1]: ");
+            if(scanner.nextInt() == 1){
+                startPlayer0 = false;
+                startWithAI = true;
+            }
+        } else {
+            System.out.print("Start with player? [0/1]: ");
+            if(scanner.nextInt() == 1){
+                startPlayer0 = false;
+            }
         }
+
         System.out.print("Customize winning message? [0/1]: ");
         if(scanner.nextInt() == 1){
             scanner.nextLine();
             System.out.print("  New message: ");
             winningMessage = scanner.nextLine();
         }
+
         System.out.print("\nEdit settings? [0/1]: ");
         if(scanner.nextInt() == 1){
             editSettings();
@@ -89,11 +133,15 @@ public class TicTacToe {
     }
 
     public static void printCourt(char[][] court){
-        for(int i = 0; i < court.length; i++){
-            for(int j = 0; j < court[i].length; j++){
-                System.out.print(court[i][j]);
+        if(!useUpdatedPrinter){
+            for(int i = 0; i < court.length; i++){
+                for(int j = 0; j < court[i].length; j++){
+                    System.out.print(court[i][j]);
+                }
+                System.out.println();
             }
-            System.out.println();
+        } else {
+            // code new visually updated printer for court
         }
     }
 
@@ -145,7 +193,51 @@ public class TicTacToe {
         }
     
         return "null"; // No winner yet
-    }    
+    }
+
+    public static int[] calcPos(){
+        int[] posArray = new int[2];
+
+
+        return posArray;
+    }
+
+    public static char[][] moveAlgorithm(char[][] court){
+        //give random number to calcpos, check if pos is available, if not, repeat until valid
+
+        int pos[] = calcPos();
+        
+        return court;
+    }
+
+    public static void moveAI(char[][] court){
+        System.out.print("[" + moveCount + "]: It's the AIs turn: ");
+
+        court = moveAlgorithm(court);
+
+        moveCount++;
+
+        switch (checkWinner(court)) {
+            case "null" -> {
+                System.out.println();
+                printCourt(court);
+                System.out.println();
+                movePlayer0(court);
+            }
+            case "tie" -> {
+                System.out.println();
+                printCourt(court);
+                System.out.println();
+                exit(false, "Tie!");
+            }
+            default -> {
+                System.out.println();
+                printCourt(court);
+                System.out.println();
+                exit(false, winningMessage);
+            }
+        }
+    }
 
     public static void movePlayer0(char[][] court){
         System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
@@ -176,7 +268,11 @@ public class TicTacToe {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
-                movePlayer1(court);
+                if(!playWithAI){
+                    movePlayer1(court);
+                } else {
+                    moveAI(court);
+                }
             }
             case "tie" -> {
                 System.out.println();
@@ -250,7 +346,7 @@ public class TicTacToe {
 
     public static void exit(boolean isError, String reason){
         if(isError){
-            System.out.print("Error: " + reason);
+            System.out.print("\nError: " + reason);
         } else {
             System.out.print("\n" + reason);
         }
