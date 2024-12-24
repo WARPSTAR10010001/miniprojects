@@ -148,7 +148,7 @@ public class TicTacToe {
     }    
 
     public static void movePlayer0(char[][] court){
-        System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [0-2] [0-2]: ");
+        System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
         int xPos = scanner.nextInt();
         int yPos = scanner.nextInt();
 
@@ -194,7 +194,7 @@ public class TicTacToe {
     }
 
     public static void movePlayer1(char[][] court){
-        System.out.print("[" + moveCount + "]: Player " + player1 + ", enter your next move [0-2] [0-2]: ");
+        System.out.print("[" + moveCount + "]: Player " + player1 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
         int xPos = scanner.nextInt();
         int yPos = scanner.nextInt();
 
