@@ -97,50 +97,55 @@ public class TicTacToe {
         }
     }
 
-    public static String checkWinner(char[][] court){
-        //checks lines
-        for(int i = 0; i < court.length; i = i + 2){
-            if(court[i][0] != ' ' && court[i][2] != ' ' && court[i][4] != ' '){
-                if(court[i][0] == court[i][2] && court[i][0] == court[i][4]){
+    public static String checkWinner(char[][] court) {
+        // Check rows
+        for (int i = 0; i < court.length; i += 2) { // Only check even-index rows
+            if (court[i][0] != ' ' && court[i][2] != ' ' && court[i][4] != ' ') {
+                if (court[i][0] == court[i][2] && court[i][0] == court[i][4]) {
                     return "win";
                 }
             }
         }
-        
-        //checks columns
-        for(int i = 0; i < court.length; i = i + 2){
-            if(court[0][i] != ' ' && court[2][i] != ' ' && court[4][i] != ' '){
-                if(court[0][i] == court[2][i] && court[0][i] == court[i][4]){
+    
+        // Check columns
+        for (int i = 0; i < court[0].length; i += 2) { // Only check even-index columns
+            if (court[0][i] != ' ' && court[2][i] != ' ' && court[4][i] != ' ') {
+                if (court[0][i] == court[2][i] && court[0][i] == court[4][i]) {
                     return "win";
                 }
             }
         }
-
-        //checks diagonal (top left to bottom right)
-        if(court[0][0] != ' ' && court[1][1] != ' ' && court[2][2] != ' '){
-            if(court[0][0] == court[1][1] && court[0][0] == court[2][2]){
+    
+        // Check diagonal (top-left to bottom-right)
+        if (court[0][0] != ' ' && court[2][2] != ' ' && court[4][4] != ' ') {
+            if (court[0][0] == court[2][2] && court[0][0] == court[4][4]) {
                 return "win";
             }
         }
-
-        //checks diagonal (top right to bottom left)
-        if(court[0][2] != ' ' && court[1][1] != ' ' && court[2][0] != ' '){
-            if(court[0][2] == court[1][1] && court[0][2] == court[2][0]){
+    
+        // Check diagonal (top-right to bottom-left)
+        if (court[0][4] != ' ' && court[2][2] != ' ' && court[4][0] != ' ') {
+            if (court[0][4] == court[2][2] && court[0][4] == court[4][0]) {
                 return "win";
             }
         }
-
-        //if court is full and none of the if-else statements above return a value, return tie
-        if(court[0][0] != ' ' && court[0][1] != ' ' && court[0][2] != ' '){
-            if(court[1][0] != ' ' && court[1][1] != ' ' && court[1][2] != ' '){
-                if(court[2][0] != ' ' && court[2][1] != ' ' && court[2][2] != ' '){
-                    return "tie";
+    
+        // Check if court is full (tie)
+        boolean isFull = true;
+        for (int i = 0; i < court.length; i += 2) { // Only check playable rows
+            for (int j = 0; j < court[i].length; j += 2) { // Only check playable columns
+                if (court[i][j] == ' ') {
+                    isFull = false;
+                    break;
                 }
             }
         }
-
-        return "null";
-    }
+        if (isFull) {
+            return "tie";
+        }
+    
+        return "null"; // No winner yet
+    }    
 
     public static void movePlayer0(char[][] court){
         System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [0-2] [0-2]: ");
