@@ -307,9 +307,9 @@ public class TicTacToe {
 
         if (court[xPos][yPos] == 0) {
             if(turn == 1){
-                court[xPos][yPos] = player1;
+                court[xPos][yPos] = 1;
             } else {
-                court[xPos][yPos] = player2;
+                court[xPos][yPos] = 2;
             }
         } else {
             System.out.println("The selected index is already reserved.\n");
