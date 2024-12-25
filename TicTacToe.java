@@ -42,17 +42,7 @@ public class TicTacToe {
 
         System.out.print("\n" + divider + "\n\n++GAME START++\n\n");
 
-        char[][] court = courtBlueprint();
-        printCourt(court);
-        System.out.println();
-
-        if(startPlayer0){
-            movePlayer0(court);
-        } else if (!startPlayer0 && !startWithAI) {
-            movePlayer1(court);
-        } else if (startWithAI && !startPlayer0){
-            moveAI(court);
-        }
+        startGame();
     }
 
     public static void editSettings(){
@@ -97,16 +87,32 @@ public class TicTacToe {
             }
         }
 
-        System.out.print("Customize winning message? [0/1]: ");
-        if(scanner.nextInt() == 1){
-            scanner.nextLine();
-            System.out.print("  New message: ");
-            winningMessage = scanner.nextLine();
+        if(!playWithAI){
+            System.out.print("Customize winning message? [0/1]: ");
+            if(scanner.nextInt() == 1){
+                scanner.nextLine();
+                System.out.print("  New message: ");
+                winningMessage = scanner.nextLine();
+            }
         }
 
         System.out.print("\nEdit settings? [0/1]: ");
         if(scanner.nextInt() == 1){
             editSettings();
+        }
+    }
+
+    public static void startGame(){
+        char[][] court = courtBlueprint();
+        printCourt(court);
+        System.out.println();
+
+        if(startPlayer0){
+            movePlayer0(court);
+        } else if (!startPlayer0 && !startWithAI) {
+            movePlayer1(court);
+        } else if (startWithAI && !startPlayer0){
+            moveAI(court);
         }
     }
 
@@ -199,16 +205,63 @@ public class TicTacToe {
         return "null"; // No winner yet
     }
 
-    public static int[] calcPos(){
-        int[] posArray = new int[2];
-
-        return posArray;
-    }
-
     public static char[][] moveAlgorithm(char[][] court){
         //give random number to calcpos, check if pos is available, if not, repeat until valid
+        boolean isValidPosition = false;
+        int xPos = -1;
+        int yPos = -1;
 
-        int pos[] = calcPos();
+        while(!isValidPosition){
+            int randomPos = (int) (Math.random() * 9) + 1;
+
+            switch (randomPos){
+                case 1 -> {
+                    xPos = 0;
+                    yPos = 0;
+                }
+                case 2 -> {
+                    xPos = 2;
+                    yPos = 0;
+                }
+                case 3 -> {
+                    xPos = 4;
+                    yPos = 0;
+                }
+                case 4 -> {
+                    xPos = 0;
+                    yPos = 2;
+                }
+                case 5 -> {
+                    xPos = 2;
+                    yPos = 2;
+                }
+                case 6 -> {
+                    xPos = 4;
+                    yPos = 2;
+                }
+                case 7 -> {
+                    xPos = 0;
+                    yPos = 4;
+                }
+                case 8 -> {
+                    xPos = 2;
+                    yPos = 4;
+                }
+                case 9 -> {
+                    xPos = 4;
+                    yPos = 4;
+                }
+                default -> {
+                    exit(false, "It's a tie!");
+                }
+            }
+
+            if(court[yPos][xPos] == ' '){
+                isValidPosition = true;
+            }
+        }
+
+        court[yPos][xPos] = playerAI;
         
         return court;
     }
@@ -217,6 +270,8 @@ public class TicTacToe {
         System.out.print("[" + moveCount + "]: It's the AIs turn: ");
 
         court = moveAlgorithm(court);
+
+        System.out.println("\n" + divider);
 
         moveCount++;
 
@@ -231,13 +286,14 @@ public class TicTacToe {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
-                exit(false, "Tie!");
+                exit(false, "It's a tie!");
             }
             default -> {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
-                exit(false, winningMessage);
+                // include replayMenu
+                exit(false, "The AI won!");
             }
         }
     }
@@ -281,13 +337,20 @@ public class TicTacToe {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
+                // include replayMenu
                 exit(false, "Tie!");
             }
             default -> {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
-                exit(false, winningMessage);
+                if(!playWithAI){
+                    // include replayMenu
+                    exit(false, winningMessage);
+                } else {
+                    // include replayMenu
+                    exit(false, "The player won!");
+                }
             }
         }
     }
@@ -327,12 +390,14 @@ public class TicTacToe {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
+                // include replayMenu
                 exit(false, "Tie!");
             }
             default -> {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
+                // include replayMenu
                 exit(false, winningMessage);
             }
         }
@@ -354,5 +419,14 @@ public class TicTacToe {
             System.out.print("\n" + reason);
         }
         System.exit(0);
+    }
+
+    public static void replayMenu(){
+        System.out.print("\nDo you want to play another game? [1/0]: ");
+        if(scanner.nextInt() == 1){
+            startGame();
+        } else {
+            exit(false, "Game session terminated.");
+        }
     }
 }
