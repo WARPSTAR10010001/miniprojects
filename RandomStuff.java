@@ -19,6 +19,7 @@ public class RandomStuff {
 
         System.out.println("[1]: Even-Or-Odd");
         System.out.println("[2]: Square Root");
+        System.out.println("[3]: Power of -1");
 
         System.out.print("\nSelection: ");
 
@@ -31,6 +32,9 @@ public class RandomStuff {
             case 2:
             System.out.println("\n" + divider);
             squareRoot();
+            case 3:
+            System.out.println("\n" + divider);
+            powerOfMinusOne();
             default:
             exit(true, "Invalid selection.");
         }
@@ -58,6 +62,17 @@ public class RandomStuff {
         int n = scanner.nextInt();
 
         System.out.print("Result: " + (int) Math.pow(n, 0.5) + "\n");
+
+        selection(false);
+    }
+
+    public static void powerOfMinusOne(){
+        System.out.println("\nn^-1:\n");
+
+        System.out.print("Number: ");
+        int n = scanner.nextInt();
+
+        System.out.print("Result: " + (int) Math.pow(n, -1) + "\n");
 
         selection(false);
     }
