@@ -1,5 +1,14 @@
 //Boo!!
 
+/*
+update court array to a 3*3 int array
+replace player char with 1 or -1, same goes for ai
+calculate if someone won by checking the sum of the columns, lines and diagonals
+-> that way error management is easier
+
+do all the visual fanciness stuff in the printCourt() function
+*/
+
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -318,6 +327,7 @@ public class TicTacToe {
     }
 
     public static void movePlayer0(char[][] court){
+        // make interaction more natural, instead of asking for 2 integers for x and y, ask for 1 digit, for example: 8 = court[4][2]
         System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
         int xPos = scanner.nextInt();
         int yPos = scanner.nextInt();
