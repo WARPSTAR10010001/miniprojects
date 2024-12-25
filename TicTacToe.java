@@ -1,8 +1,5 @@
 //Boo!!
 
-//Maybe include option to play with the program someday?
-//Maybe even let player customize the intelligence of the program [n = [1|10]; n/10 chance to make a right move]
-
 import java.util.Scanner;
 
 public class TicTacToe {
