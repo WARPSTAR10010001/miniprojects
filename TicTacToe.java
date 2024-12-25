@@ -7,8 +7,7 @@ calculate if someone won by checking the sum of the columns, lines and diagonals
 -> that way error management is easier
 
 do all the visual fanciness stuff in the printCourt() function
-*/
-
+ */
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -18,33 +17,29 @@ public class TicTacToe {
     static int moveCount = 1;
     static String divider = "--------------------------------------------------------------";
 
-    //Settings:
-    static char player0 = 'O';
-    static char player1 = 'X';
+    //Global settings:
+    static char player1 = 'O';
+    static char player2 = 'X';
     static char playerAI = '+';
-    static boolean startPlayer0 = true;
+    static int startWith = 1; // 0 = AI, 1 = Player 1, 2 = Player 2
     static String winningMessage = "You Won! Congrats!";
     static boolean playWithAI = false;
-    static boolean startWithAI = false;
     static int AIlevel = 0;
 
-    //Developement variables:
-    static boolean useUpdatedPrinter = false;
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("+++TIC TAC TOE+++\n");
 
         System.out.println(divider + "\n\n++MENU++\n");
 
         System.out.print("[WIP] Play with AI? [0/1]: ");
-        if(scanner.nextInt() == 1){
+        if (scanner.nextInt() == 1) {
             playWithAI = true;
             AIlevel = 1;
         }
         System.out.println("playWithAI: " + playWithAI); //add proper player feedback
 
         System.out.print("\nEdit settings? [0/1]: ");
-        if(scanner.nextInt() == 1){
+        if (scanner.nextInt() == 1) {
             editSettings();
         }
 
@@ -53,60 +48,59 @@ public class TicTacToe {
         startGame();
     }
 
-    public static void editSettings(){
+    public static void editSettings() {
         System.out.println("\n" + divider + "\n\n++SETTINGS++\n");
-        if(playWithAI){
-            System.out.print("Set AI level [1-3]: ");
+        if (playWithAI) {
+            System.out.print("Set AI level [default: 1] [1-3]: ");
             int temp = scanner.nextInt();
-            if(temp < 1 || temp > 3){
+            if (temp < 1 || temp > 3) {
                 exit(true, "Invalid AI level.");
             } else {
                 AIlevel = temp;
             }
         }
-        if(!playWithAI){
+        if (!playWithAI) {
             System.out.print("Edit Player letters? [0/1]: ");
-            if(scanner.nextInt() == 1){
+            if (scanner.nextInt() == 1) {
                 scanner.nextLine();
                 System.out.print("  Enter letter for the 1st player [default: O]: ");
                 String temp = scanner.nextLine();
-                player0 = temp.charAt(0);
+                player1 = temp.charAt(0);
                 System.out.print("  Enter letter for the 2nd player [default: X]: ");
                 temp = scanner.nextLine();
-                if(temp.charAt(0) == player0){
-                    exit(true, "Can't have two players with the same character");
+                if (temp.charAt(0) == player1) {
+                    exit(true, "Can't have two players with the same character.");
                 }
-                player1 = temp.charAt(0);
+                player2 = temp.charAt(0);
             }
         } else {
             System.out.print("Edit Player letter? [0/1]: ");
-            if(scanner.nextInt() == 1){
+            if (scanner.nextInt() == 1) {
                 scanner.nextLine();
                 System.out.print("  Enter custom letter [default: O]: ");
                 String temp = scanner.nextLine();
-                if(temp.charAt(0) == playerAI){
-                    exit(true, "Can't have two players with the same character");
+                if (temp.charAt(0) == playerAI) {
+                    exit(true, "Can't have two players with the same character.");
                 }
-                player0 = temp.charAt(0);
+                player1 = temp.charAt(0);
             }
         }
 
-        if(playWithAI){
+        if (playWithAI) {
             System.out.print("Start with AI? [0/1]: ");
-            if(scanner.nextInt() == 1){
-                startPlayer0 = false;
-                startWithAI = true;
+            if (scanner.nextInt() == 1) {
+                startWith = 0;
             }
         } else {
-            System.out.print("Start with player? [0/1]: ");
-            if(scanner.nextInt() == 1){
-                startPlayer0 = false;
+            System.out.print("Start with player? [1/2]: ");
+            if (scanner.nextInt() == 2) {
+                startWith = 2;
             }
         }
 
-        if(!playWithAI){
+        if (!playWithAI) {
             System.out.print("Customize winning message? [0/1]: ");
-            if(scanner.nextInt() == 1){
+            if (scanner.nextInt() == 1) {
                 scanner.nextLine();
                 System.out.print("  New message: ");
                 winningMessage = scanner.nextLine();
@@ -114,132 +108,100 @@ public class TicTacToe {
         }
 
         System.out.print("\nEdit settings? [0/1]: ");
-        if(scanner.nextInt() == 1){
+        if (scanner.nextInt() == 1) {
             editSettings();
         }
     }
 
-    public static void startGame(){
-        char[][] court = courtBlueprint();
+    public static void startGame() {
+        int[][] court = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
         printCourt(court);
         System.out.println();
 
-        if(startPlayer0){
-            movePlayer0(court);
-        } else if (!startPlayer0 && !startWithAI) {
-            movePlayer1(court);
-        } else if (startWithAI && !startPlayer0){
-            moveAI(court);
+        switch (startWith) {
+            case 0 -> moveAI(court);
+            default -> movePlayer(startWith, court);
         }
     }
 
-    public static char[][] courtBlueprint(){
-        char[][] court = new char[5][5];
+    public static void printCourt(int[][] court) {
+        char[][] pC = new char[19][19];
 
-        if(!useUpdatedPrinter){
-            for(int i = 0; i < court.length; i++){
-                if(i % 2 == 1){
-                    for(int j = 0; j < court[i].length; j++){
-                        court[i][j] = '-';
+        for(int i = 0; i < pC.length; i++){
+            for(int j = 0; j < pC[i].length; j++){
+                if(i == 0 || i == (pC.length)-1){
+                    if(j == 0 || j == 6 || j == 12 || j == 18){
+                        pC[i][j] = 'o';
+                    } else {
+                        pC[i][j] = '-';
                     }
                 } else {
-                    for(int j = 0; j < court[i].length; j++){
-                        if(j % 2 == 1){
-                            court[i][j] = '|';
-                        } else {
-                            court[i][j] = ' ';
-                        }
+                    if(i == 6 || j == 12 || i == 18 && j == 0){
+                        pC[i][j] = 'o';
+                    } else {
+                        // rest of the code
                     }
                 }
             }
-        } else {
-            // code new visually updated printer for court
         }
-        
-        return court;
+
+
     }
 
-    public static void printCourt(char[][] court){
-        if(!useUpdatedPrinter){
-            for(int i = 0; i < court.length; i++){
-                for(int j = 0; j < court[i].length; j++){
-                    System.out.print(court[i][j]);
-                }
-                System.out.println();
-            }
-        } else {
-            // code new visually updated printer for court
-        }
-    }
-
-    public static String checkWinner(char[][] court) {
-        // Check rows
-        for (int i = 0; i < court.length; i += 2) { // Only check even-index rows
-            if (court[i][0] != ' ' && court[i][2] != ' ' && court[i][4] != ' ') {
-                if (court[i][0] == court[i][2] && court[i][0] == court[i][4]) {
-                    return "win";
-                }
-            }
-        }
-    
-        // Check columns
-        for (int i = 0; i < court[0].length; i += 2) { // Only check even-index columns
-            if (court[0][i] != ' ' && court[2][i] != ' ' && court[4][i] != ' ') {
-                if (court[0][i] == court[2][i] && court[0][i] == court[4][i]) {
-                    return "win";
-                }
-            }
-        }
-    
-        // Check diagonal (top-left to bottom-right)
-        if (court[0][0] != ' ' && court[2][2] != ' ' && court[4][4] != ' ') {
-            if (court[0][0] == court[2][2] && court[0][0] == court[4][4]) {
+    public static String checkWinner(int[][] court) {
+        for (int i = 0; i < court.length; i++) {
+            if (court[i][0] + court[i][1] + court[i][2] == 3 || court[i][0] + court[i][1] + court[i][2] == -3) {
                 return "win";
             }
         }
-    
-        // Check diagonal (top-right to bottom-left)
-        if (court[0][4] != ' ' && court[2][2] != ' ' && court[4][0] != ' ') {
-            if (court[0][4] == court[2][2] && court[0][4] == court[4][0]) {
+
+        for (int i = 0; i < court[0].length; i++) {
+            if (court[0][i] + court[1][i] + court[2][i] == 3 || court[0][i] + court[1][i] + court[2][i] == -3) {
                 return "win";
             }
         }
-    
-        // Check if court is full (tie)
+
+        if (court[0][0] + court[1][1] + court[2][2] == 3 || court[0][0] + court[1][1] + court[2][2] == -3) {
+            return "win";
+        }
+
+        if (court[0][2] + court[1][1] + court[2][0] == 3 || court[0][2] + court[1][1] + court[2][0] == -3) {
+            return "win";
+        }
+
         boolean isFull = true;
-        for (int i = 0; i < court.length; i += 2) { // Only check playable rows
-            for (int j = 0; j < court[i].length; j += 2) { // Only check playable columns
-                if (court[i][j] == ' ') {
+        for (int i = 0; i < court.length; i++) {
+            for (int j = 0; i < court[i].length; j++) {
+                if (court[i][j] == 0) {
                     isFull = false;
-                    break;
                 }
             }
         }
         if (isFull) {
             return "tie";
         }
-    
-        return "null"; // No winner yet
+
+        return "null";
     }
 
-    public static char[][] moveAlgorithm(char[][] court){
+    public static char[][] moveAlgorithm(char[][] court) {
         /*
         include different difficulty levels:
         1: random guesses
         2: advanced guesses, for example if line or row is made of 2 of the same symbols, fill line with 3rd symbol to either prevent player from winning or to make ai win
         3: same as 2 but check for diagonals as well
-        */
+         */
 
         boolean isValidPosition = false;
         int xPos = -1;
         int yPos = -1;
 
         // move this block of code into a seperate function
-        if(AIlevel == 1){
-            while(!isValidPosition){
+        if (AIlevel == 1) {
+            while (!isValidPosition) {
                 int randomPos = (int) (Math.random() * 9) + 1;
-    
-                switch (randomPos){
+
+                switch (randomPos) {
                     case 1 -> {
                         xPos = 0;
                         yPos = 0;
@@ -280,21 +242,21 @@ public class TicTacToe {
                         exit(false, "It's a tie!");
                     }
                 }
-    
-                if(court[yPos][xPos] == ' '){
+
+                if (court[yPos][xPos] == ' ') {
                     isValidPosition = true;
                 }
             }
-        } else if (AIlevel > 1){
+        } else if (AIlevel > 1) {
             exit(true, "AI level not implemented yet.");
         }
 
         court[yPos][xPos] = playerAI;
-        
+
         return court;
     }
 
-    public static void moveAI(char[][] court){
+    public static void moveAI(char[][] court) {
         System.out.print("[" + moveCount + "]: It's the AIs turn: ");
 
         court = moveAlgorithm(court);
@@ -326,123 +288,71 @@ public class TicTacToe {
         }
     }
 
-    public static void movePlayer0(char[][] court){
-        // make interaction more natural, instead of asking for 2 integers for x and y, ask for 1 digit, for example: 8 = court[4][2]
-        System.out.print("[" + moveCount + "]: Player " + player0 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
-        int xPos = scanner.nextInt();
-        int yPos = scanner.nextInt();
-
-        if(xPos > 2 || yPos > 2){
-            System.out.println("Please select a number in the given interval.\n");
-            movePlayer0(court);
+    public static void movePlayer(int turn, int[][] court) {
+        if(turn == 1){
+            System.out.print("[" + moveCount + "]: Player " + player1 + ", enter your next move [Position: 1-9]: ");
+        } else {
+            System.out.print("[" + moveCount + "]: Player " + player2 + ", enter your next move [Position: 1-9]: ");
         }
 
-        xPos = correctPos(xPos);
-        yPos = correctPos(yPos);
+        int inputPos = scanner.nextInt();
 
-        if(court[xPos][yPos] == ' '){
-            court[xPos][yPos] = player0;
+        if (inputPos > 9 || inputPos < 0) {
+            System.out.println("Please select a number in the given interval.\n");
+            movePlayer(turn, court);
+        }
+
+        int xPos = inputPos % 3;
+        int yPos = inputPos / 3;
+
+        if (court[xPos][yPos] == 0) {
+            if(turn == 1){
+                court[xPos][yPos] = player1;
+            } else {
+                court[xPos][yPos] = player2;
+            }
         } else {
             System.out.println("The selected index is already reserved.\n");
-            movePlayer0(court);
+            movePlayer(turn, court);
         }
 
-        System.out.println("\n" + divider);
-
         moveCount++;
+
+        System.out.println("\n" + divider + "\n");
+        printCourt(court);
 
         switch (checkWinner(court)) {
             case "null" -> {
                 System.out.println();
-                printCourt(court);
-                System.out.println();
-                if(!playWithAI){
-                    movePlayer1(court);
+                if (!playWithAI) {
+                    if(turn == 1){
+                        movePlayer(2, court);
+                    } else {
+                        movePlayer(1, court);
+                    }
                 } else {
                     moveAI(court);
                 }
             }
             case "tie" -> {
-                System.out.println();
-                printCourt(court);
-                System.out.println();
-                // include replayMenu
-                exit(false, "Tie!");
+                System.out.println("\nTie!");
+                replayMenu();
             }
             default -> {
                 System.out.println();
-                printCourt(court);
-                System.out.println();
-                if(!playWithAI){
-                    // include replayMenu
-                    exit(false, winningMessage);
+                if (!playWithAI) {
+                    System.out.println("\n" + winningMessage);
+                    replayMenu();
                 } else {
-                    // include replayMenu
-                    exit(false, "The player won!");
+                    System.out.println("\nThe player won!");
+                    replayMenu();
                 }
             }
         }
     }
 
-    public static void movePlayer1(char[][] court){
-        System.out.print("[" + moveCount + "]: Player " + player1 + ", enter your next move [y-Pos: 0-2] [x-Pos: 0-2]: ");
-        int xPos = scanner.nextInt();
-        int yPos = scanner.nextInt();
-
-        if(xPos > 2 || yPos > 2){
-            System.out.println("Please select a number in the given interval.\n");
-            movePlayer1(court);
-        }
-
-        xPos = correctPos(xPos);
-        yPos = correctPos(yPos);
-
-        if(court[xPos][yPos] == ' '){
-            court[xPos][yPos] = player1;
-        } else {
-            System.out.println("The selected index is already reserved.\n");
-            movePlayer1(court);
-        }
-
-        System.out.println("\n" + divider);
-
-        moveCount++;
-
-        switch (checkWinner(court)) {
-            case "null" -> {
-                System.out.println();
-                printCourt(court);
-                System.out.println();
-                movePlayer0(court);
-            }
-            case "tie" -> {
-                System.out.println();
-                printCourt(court);
-                System.out.println();
-                // include replayMenu
-                exit(false, "Tie!");
-            }
-            default -> {
-                System.out.println();
-                printCourt(court);
-                System.out.println();
-                // include replayMenu
-                exit(false, winningMessage);
-            }
-        }
-    }
-
-    public static int correctPos(int pos){
-        return switch (pos) {
-            case 0 -> 0;
-            case 1 -> 2;
-            case 2 -> 4;
-            default -> -1;
-        };
-    }
-
-    public static void exit(boolean isError, String reason){
-        if(isError){
+    public static void exit(boolean isError, String reason) {
+        if (isError) {
             System.out.print("\nError: " + reason);
         } else {
             System.out.print("\n" + reason);
@@ -450,9 +360,9 @@ public class TicTacToe {
         System.exit(0);
     }
 
-    public static void replayMenu(){
+    public static void replayMenu() {
         System.out.print("\nDo you want to play another game? [1/0]: ");
-        if(scanner.nextInt() == 1){
+        if (scanner.nextInt() == 1) {
             startGame();
         } else {
             exit(false, "Game session terminated.");
