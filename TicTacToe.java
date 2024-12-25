@@ -20,6 +20,7 @@ public class TicTacToe {
     static String winningMessage = "You Won! Congrats!";
     static boolean playWithAI = false;
     static boolean startWithAI = false;
+    static int AIlevel = 0;
 
     //Developement variables:
     static boolean useUpdatedPrinter = false;
@@ -32,6 +33,7 @@ public class TicTacToe {
         System.out.print("[WIP] Play with AI? [0/1]: ");
         if(scanner.nextInt() == 1){
             playWithAI = true;
+            AIlevel = 1;
         }
         System.out.println("playWithAI: " + playWithAI); //add proper player feedback
 
@@ -47,6 +49,15 @@ public class TicTacToe {
 
     public static void editSettings(){
         System.out.println("\n" + divider + "\n\n++SETTINGS++\n");
+        if(playWithAI){
+            System.out.print("Set AI level [1-3]: ");
+            int temp = scanner.nextInt();
+            if(temp < 1 || temp > 3){
+                exit(true, "Invalid AI level.");
+            } else {
+                AIlevel = temp;
+            }
+        }
         if(!playWithAI){
             System.out.print("Edit Player letters? [0/1]: ");
             if(scanner.nextInt() == 1){
@@ -206,59 +217,70 @@ public class TicTacToe {
     }
 
     public static char[][] moveAlgorithm(char[][] court){
-        //give random number to calcpos, check if pos is available, if not, repeat until valid
+        /*
+        include different difficulty levels:
+        1: random guesses
+        2: advanced guesses, for example if line or row is made of 2 of the same symbols, fill line with 3rd symbol to either prevent player from winning or to make ai win
+        3: same as 2 but check for diagonals as well
+        */
+
         boolean isValidPosition = false;
         int xPos = -1;
         int yPos = -1;
 
-        while(!isValidPosition){
-            int randomPos = (int) (Math.random() * 9) + 1;
-
-            switch (randomPos){
-                case 1 -> {
-                    xPos = 0;
-                    yPos = 0;
+        // move this block of code into a seperate function
+        if(AIlevel == 1){
+            while(!isValidPosition){
+                int randomPos = (int) (Math.random() * 9) + 1;
+    
+                switch (randomPos){
+                    case 1 -> {
+                        xPos = 0;
+                        yPos = 0;
+                    }
+                    case 2 -> {
+                        xPos = 2;
+                        yPos = 0;
+                    }
+                    case 3 -> {
+                        xPos = 4;
+                        yPos = 0;
+                    }
+                    case 4 -> {
+                        xPos = 0;
+                        yPos = 2;
+                    }
+                    case 5 -> {
+                        xPos = 2;
+                        yPos = 2;
+                    }
+                    case 6 -> {
+                        xPos = 4;
+                        yPos = 2;
+                    }
+                    case 7 -> {
+                        xPos = 0;
+                        yPos = 4;
+                    }
+                    case 8 -> {
+                        xPos = 2;
+                        yPos = 4;
+                    }
+                    case 9 -> {
+                        xPos = 4;
+                        yPos = 4;
+                    }
+                    default -> {
+                        exit(false, "It's a tie!");
+                    }
                 }
-                case 2 -> {
-                    xPos = 2;
-                    yPos = 0;
-                }
-                case 3 -> {
-                    xPos = 4;
-                    yPos = 0;
-                }
-                case 4 -> {
-                    xPos = 0;
-                    yPos = 2;
-                }
-                case 5 -> {
-                    xPos = 2;
-                    yPos = 2;
-                }
-                case 6 -> {
-                    xPos = 4;
-                    yPos = 2;
-                }
-                case 7 -> {
-                    xPos = 0;
-                    yPos = 4;
-                }
-                case 8 -> {
-                    xPos = 2;
-                    yPos = 4;
-                }
-                case 9 -> {
-                    xPos = 4;
-                    yPos = 4;
-                }
-                default -> {
-                    exit(false, "It's a tie!");
+    
+                if(court[yPos][xPos] == ' '){
+                    isValidPosition = true;
                 }
             }
-
-            if(court[yPos][xPos] == ' '){
-                isValidPosition = true;
-            }
+        } else if (AIlevel > 1){
+            exit(true, "AI level not implemented yet.");
         }
 
         court[yPos][xPos] = playerAI;
