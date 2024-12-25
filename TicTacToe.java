@@ -139,7 +139,11 @@ public class TicTacToe {
                     if(i == 6 || j == 12 || i == 18 && j == 0){
                         pC[i][j] = 'o';
                     } else {
-                        // rest of the code
+                        for(int xPos = 0; xPos < court.length; xPos++){
+                            for(int yPos = 0; yPos < court[xPos].length; yPos++){
+                                
+                            }
+                        }
                     }
                 }
             }
