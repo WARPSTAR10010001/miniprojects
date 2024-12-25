@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class GuessingGame {
 
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         System.out.println("+++GUESSING GAME+++\n");
-        Scanner scanner = new Scanner(System.in);
         int randomNum = (int) (Math.random() * 101);
         int guess = Integer.MIN_VALUE;
         int guessCount = 1;
@@ -17,21 +18,19 @@ public class GuessingGame {
         int temp = scanner.nextInt();
 
         switch (temp) {
-            case 1:
+            case 1 -> {
                 isHardmode = true;
                 System.out.print("Hardmode: " + isHardmode + "\n\n");
-                break;
-            case 0:
+            }
+            case 0 -> {
                 isHardmode = false;
                 System.out.print("Hardmode: " + isHardmode + "\n\n");
-                break;
-            case 69420:
+            }
+            case 69420 -> {
                 isFreaky = true;
                 System.out.print("FREAKY mode enabled~~ :P :3\n\n");
-                break;
-            default:
-                exit(false, "fucking dumbass read the instructions.");
-                break;
+            }
+            default -> exit(false, "fucking dumbass read the instructions lölölölö.");
         }
 
         String[] affirmation = affirmations();
