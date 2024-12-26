@@ -15,7 +15,7 @@ public class TicTacToe {
     static char playerAI = '+';
     static int AIlevel = 0;
     static int startWith = 1; // 0 = AI, 1 = Player 1, 2 = Player 2
-    static String winningMessage = "You Won! Congrats!";
+    static String winningMessage = "You won! Congratulations!";
     static boolean playWithAI = false;
 
     public static void main(String[] args) {
@@ -30,8 +30,8 @@ public class TicTacToe {
         }
 
         if(!playWithAI){
-            namePlayer1 = "1 ";
-            namePlayer2 = "2 ";
+            namePlayer1 = "1";
+            namePlayer2 = "2";
         } else {
             namePlayer1 = "";
         }
@@ -277,10 +277,12 @@ public class TicTacToe {
     }
 
     public static void movePlayer(int turn, int[][] court) {
-        if(turn == 1){
-            System.out.print("[" + moveCount + "]: Player " + player1 + ", enter your next move [Position: 1-9]: ");
+        if(playWithAI){
+            System.out.print("[" + moveCount + "]: It's the players turn [Position: 1-9]: ");
+        } else if(turn == 1) {
+            System.out.print("[" + moveCount + "]: " + namePlayer1 + ", it's your turn [Position: 1-9]: ");
         } else {
-            System.out.print("[" + moveCount + "]: Player " + player2 + ", enter your next move [Position: 1-9]: ");
+            System.out.print("[" + moveCount + "]: " + namePlayer2 + ", it's your turn [Position: 1-9]: ");
         }
 
         int inputPos = scanner.nextInt();
@@ -342,7 +344,9 @@ public class TicTacToe {
     public static void pause(long timeInMilliSeconds) {
         long timestamp = System.currentTimeMillis();
     
-        do {} while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
+        do {
+            //nothing
+        } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
     }
 
     public static void exit(boolean isError, String reason) {
