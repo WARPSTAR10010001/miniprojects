@@ -1,13 +1,5 @@
 //Boo!!
 
-/*
-update court array to a 3*3 int array
-replace player char with 1 or -1, same goes for ai
-calculate if someone won by checking the sum of the columns, lines and diagonals
--> that way error management is easier
-
-do all the visual fanciness stuff in the printCourt() function
- */
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -18,13 +10,13 @@ public class TicTacToe {
     static String divider = "--------------------------------------------------------------";
 
     //Global settings:
-    static char player1 = 'O';
-    static char player2 = 'X';
+    static String namePlayer1 = "";
+    static String namePlayer2 = "";
     static char playerAI = '+';
+    static int AIlevel = 0;
     static int startWith = 1; // 0 = AI, 1 = Player 1, 2 = Player 2
     static String winningMessage = "You Won! Congrats!";
     static boolean playWithAI = false;
-    static int AIlevel = 0;
 
     public static void main(String[] args) {
         System.out.println("+++TIC TAC TOE+++\n");
@@ -35,6 +27,13 @@ public class TicTacToe {
         if (scanner.nextInt() == 1) {
             playWithAI = true;
             AIlevel = 1;
+        }
+
+        if(!playWithAI){
+            namePlayer1 = "1 ";
+            namePlayer2 = "2 ";
+        } else {
+            namePlayer1 = "";
         }
 
         System.out.print("\nEdit settings? [0/1]: ");
@@ -59,29 +58,30 @@ public class TicTacToe {
             }
         }
         if (!playWithAI) {
-            System.out.print("Edit Player letters? [0/1]: ");
+            System.out.print("Edit player names? [0/1]: ");
             if (scanner.nextInt() == 1) {
                 scanner.nextLine();
-                System.out.print("  Enter letter for the 1st player [default: O]: ");
+                System.out.print("  Enter name for the 1st player [current: " + namePlayer1 + "]: ");
+                namePlayer1 = scanner.nextLine();
+                System.out.print("  Enter name for the 2nd player [current: " + namePlayer2 + "]: ");
                 String temp = scanner.nextLine();
-                player1 = temp.charAt(0);
-                System.out.print("  Enter letter for the 2nd player [default: X]: ");
-                temp = scanner.nextLine();
-                if (temp.charAt(0) == player1) {
-                    exit(true, "Can't have two players with the same character.");
+                if (temp.equals(namePlayer1)) {
+                    exit(true, "Can't have two players with the same name.");
+                } else {
+                    namePlayer2 = temp;
                 }
-                player2 = temp.charAt(0);
             }
         } else {
-            System.out.print("Edit Player letter? [0/1]: ");
+            System.out.print("Edit Player name? [0/1]: ");
             if (scanner.nextInt() == 1) {
                 scanner.nextLine();
-                System.out.print("  Enter custom letter [default: O]: ");
+                System.out.print("  Enter name for the player: ");
                 String temp = scanner.nextLine();
-                if (temp.charAt(0) == playerAI) {
-                    exit(true, "Can't have two players with the same character.");
+                if(temp.equals("AI")){
+                    exit(true, "Can't have two players with the same name.");
+                } else {
+                    namePlayer1 = temp;
                 }
-                player1 = temp.charAt(0);
             }
         }
 
@@ -126,10 +126,8 @@ public class TicTacToe {
     public static void printCourt(int[][] court) {
         char[][] pC = new char[17][17];
 
-        for(int i = 0; i < pC.length; i++){
-            for(int j = 0; j < pC[i].length; j++){
-                
-            }
+        if(!playWithAI){
+
         }
     }
 
@@ -339,6 +337,12 @@ public class TicTacToe {
                 }
             }
         }
+    }
+
+    public static void pause(long timeInMilliSeconds) {
+        long timestamp = System.currentTimeMillis();
+    
+        do {} while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
     }
 
     public static void exit(boolean isError, String reason) {
