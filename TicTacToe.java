@@ -36,7 +36,6 @@ public class TicTacToe {
             playWithAI = true;
             AIlevel = 1;
         }
-        System.out.println("playWithAI: " + playWithAI); //add proper player feedback
 
         System.out.print("\nEdit settings? [0/1]: ");
         if (scanner.nextInt() == 1) {
@@ -125,31 +124,18 @@ public class TicTacToe {
     }
 
     public static void printCourt(int[][] court) {
-        char[][] pC = new char[19][19];
+        char[][] pC = new char[17][17];
 
         for(int i = 0; i < pC.length; i++){
             for(int j = 0; j < pC[i].length; j++){
-                if(i == 0 || i == (pC.length)-1){
-                    if(j == 0 || j == 6 || j == 12 || j == 18){
-                        pC[i][j] = 'o';
-                    } else {
-                        pC[i][j] = '-';
-                    }
-                } else {
-                    if(i == 6 || j == 12 || i == 18 && j == 0){
-                        pC[i][j] = 'o';
-                    } else {
-                        for(int xPos = 0; xPos < court.length; xPos++){
-                            for(int yPos = 0; yPos < court[xPos].length; yPos++){
-                                
-                            }
-                        }
-                    }
-                }
+                
             }
         }
+    }
 
+    public static char[][] drawChar(char[][] pC, int xOffset, int yOffset){
 
+        return pC;
     }
 
     public static String checkWinner(int[][] court) {
