@@ -1,39 +1,34 @@
 //Boo!!
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TicTacToe {
 
-    //General static data/objects:
+    //Global data:
     static Scanner scanner = new Scanner(System.in);
     static int moveCount = 1;
     static String divider = "--------------------------------------------------------------";
+    static String namePlayer1 = "Player 1";
+    static String namePlayer2 = "Player 2";
+    static char[][] printableCourt = new char[17][17];
+    static boolean[] isCellFull = new boolean[9];
 
     //Global settings:
-    static String namePlayer1 = "";
-    static String namePlayer2 = "";
-    static char playerAI = '+';
     static int AIlevel = 0;
-    static int startWith = 1; // 0 = AI, 1 = Player 1, 2 = Player 2
+    static int startWith = 1;
     static String winningMessage = "You won! Congratulations!";
-    static boolean playWithAI = false;
+    static boolean playWithAI;
 
     public static void main(String[] args) {
         System.out.println("+++TIC TAC TOE+++\n");
 
         System.out.println(divider + "\n\n++MENU++\n");
 
-        System.out.print("[WIP] Play with AI? [0/1]: ");
+        System.out.print("Play with AI? [0/1]: ");
         if (scanner.nextInt() == 1) {
             playWithAI = true;
             AIlevel = 1;
-        }
-
-        if (!playWithAI) {
-            namePlayer1 = "1";
-            namePlayer2 = "2";
-        } else {
-            namePlayer1 = "";
         }
 
         System.out.print("\nEdit settings? [0/1]: ");
@@ -41,15 +36,13 @@ public class TicTacToe {
             editSettings();
         }
 
-        System.out.print("\n" + divider + "\n\n++GAME START++\n\n");
-
         startGame();
     }
 
     public static void editSettings() {
         System.out.println("\n" + divider + "\n\n++SETTINGS++\n");
         if (playWithAI) {
-            System.out.print("Set AI level [default: 1] [1-3]: ");
+            System.out.print("Set AI level [current: " + AIlevel + "] [1-3]: ");
             int temp = scanner.nextInt();
             if (temp < 1 || temp > 3) {
                 exit(true, "Invalid AI level.");
@@ -74,12 +67,12 @@ public class TicTacToe {
         }
 
         if (playWithAI) {
-            System.out.print("Start with AI? [0/1]: ");
-            if (scanner.nextInt() == 1) {
+            System.out.print("Start with player? [current: " + startWith + "] [0/1]: ");
+            if (scanner.nextInt() == 0) {
                 startWith = 0;
             }
         } else {
-            System.out.print("Start with player? [1/2]: ");
+            System.out.print("Start with player? [current: " + startWith + "] [1/2]: ");
             if (scanner.nextInt() == 2) {
                 startWith = 2;
             }
@@ -101,59 +94,103 @@ public class TicTacToe {
     }
 
     public static void startGame() {
+        System.out.print("\n" + divider + "\n\n++GAME START++\n\n");
+        Arrays.fill(isCellFull, false);
+        printCourtBlueprint();
+        moveCount = 1;
+
         int[][] court = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
         printCourt(court);
         System.out.println();
 
-        switch (startWith) {
-            case 0 ->
-                moveAI(court);
-            default ->
-                movePlayer(startWith, court);
+        if(startWith == 0){
+            moveAI(court);
+        } else if (!playWithAI && startWith == 1){
+            movePlayer(1, court);
+        } else if (playWithAI && startWith == 1){
+            movePlayer(0, court);
+        } else if (!playWithAI && startWith == 2){
+            movePlayer(2, court);
+        }
+    }
+
+    public static void printCourtBlueprint() {
+        for(int i = 0; i < printableCourt.length; i++){
+            for(int j = 0; j < printableCourt[i].length; j++){
+                if(i == 5 || i == 11){
+                    if(j == 5 || j == 11){
+                        printableCourt[i][j] = 'o';
+                    } else {
+                        printableCourt[i][j] = '-';
+                    }
+                } else if (j == 5 || j == 11){
+                    printableCourt[i][j] = '|';
+                } else {
+                    printableCourt[i][j] = ' ';
+                }
+            }
         }
     }
 
     public static void printCourt(int[][] court) {
-        char[][] pC = new char[17][17];
-
-        //blueprint
-        // ...
-        if (court[0][0] != 0) {
-            pC = drawChar(pC, 0, 0, court[0][0]);
-        } else if (court[0][1] != 0) {
-            pC = drawChar(pC, 6, 0, court[0][1]);
-        } else if (court[0][2] != 0) {
-            pC = drawChar(pC, 12, 0, court[0][2]);
-        } else if (court[1][0] != 0) {
-            pC = drawChar(pC, 0, 6, court[1][0]);
-        } else if (court[1][1] != 0) {
-            pC = drawChar(pC, 6, 6, court[1][1]);
-        } else if (court[1][2] != 0) {
-            pC = drawChar(pC, 12, 6, court[1][2]);
-        } else if (court[2][0] != 0) {
-            pC = drawChar(pC, 0, 12, court[2][0]);
-        } else if (court[2][1] != 0) {
-            pC = drawChar(pC, 6, 12, court[2][1]);
-        } else if (court[2][2] != 0) {
-            pC = drawChar(pC, 12, 12, court[2][2]);
+        if (court[0][0] != 0 && !isCellFull[0]) {
+            drawChar(0, 0, court[0][0]);
+            isCellFull[0] = true;
+        } else if (court[0][1] != 0 && !isCellFull[1]) {
+            drawChar(6, 0, court[0][1]);
+            isCellFull[1] = true;
+        } else if (court[0][2] != 0 && !isCellFull[2]) {
+            drawChar(12, 0, court[0][2]);
+            isCellFull[2] = true;
+        } else if (court[1][0] != 0 && !isCellFull[3]) {
+            drawChar(0, 6, court[1][0]);
+            isCellFull[3] = true;
+        } else if (court[1][1] != 0 && !isCellFull[4]) {
+            drawChar(6, 6, court[1][1]);
+            isCellFull[4] = true;
+        } else if (court[1][2] != 0 && !isCellFull[5]) {
+            drawChar(12, 6, court[1][2]);
+            isCellFull[5] = true;
+        } else if (court[2][0] != 0 && !isCellFull[6]) {
+            drawChar(0, 12, court[2][0]);
+            isCellFull[6] = true;
+        } else if (court[2][1] != 0 && !isCellFull[7]) {
+            drawChar(6, 12, court[2][1]);
+            isCellFull[7] = true;
+        } else if (court[2][2] != 0 && !isCellFull[8]) {
+            drawChar(12, 12, court[2][2]);
+            isCellFull[8] = true;
         }
 
-        for (int i = 0; i < pC.length; i++) {
-            for (int j = 0; j < pC[i].length; j++) {
-                System.out.print(pC[i][j]);
+        for (int i = 0; i < printableCourt.length; i++) {
+            for (int j = 0; j < printableCourt[i].length; j++) {
+                System.out.print(printableCourt[i][j]);
             }
             System.out.println();
         }
     }
 
-    public static char[][] drawChar(char[][] pC, int xO, int yO, int num) {
-        if (!playWithAI) {
-            // ...
+    public static void drawChar(int yO, int xO, int num) {
+        if (num == 1) {
+            printableCourt[xO + 1][yO + 2] = 'O';
+            printableCourt[xO + 2][yO + 1] = 'O';
+            printableCourt[xO + 2][yO + 3] = 'O';
+            printableCourt[xO + 3][yO + 2] = 'O';
         } else {
-            // ...
+            if (!playWithAI) {
+                printableCourt[xO + 1][yO + 1] = 'X';
+                printableCourt[xO + 1][yO + 3] = 'X';
+                printableCourt[xO + 2][yO + 2] = 'X';
+                printableCourt[xO + 3][yO + 1] = 'X';
+                printableCourt[xO + 3][yO + 3] = 'X';
+            } else {
+                printableCourt[xO + 1][yO + 2] = '+';
+                printableCourt[xO + 2][yO + 1] = '+';
+                printableCourt[xO + 2][yO + 2] = '+';
+                printableCourt[xO + 2][yO + 3] = '+';
+                printableCourt[xO + 3][yO + 2] = '+';
+            }
         }
-
-        return pC;
     }
 
     public static String checkWinner(int[][] court) {
@@ -178,11 +215,9 @@ public class TicTacToe {
         }
 
         boolean isFull = true;
-        for (int i = 0; i < court.length; i++) {
-            for (int j = 0; i < court[i].length; j++) {
-                if (court[i][j] == 0) {
-                    isFull = false;
-                }
+        for(int i = 0; i < isCellFull.length; i++){
+            if(isCellFull[i] == false){
+                isFull = false;
             }
         }
         if (isFull) {
@@ -192,84 +227,68 @@ public class TicTacToe {
         return "null";
     }
 
-    public static char[][] moveAlgorithm(char[][] court) {
-        /*
-        include different difficulty levels:
-        1: random guesses
-        2: advanced guesses, for example if line or row is made of 2 of the same symbols, fill line with 3rd symbol to either prevent player from winning or to make ai win
-        3: same as 2 but check for diagonals as well
-         */
-
-        boolean isValidPosition = false;
-        int xPos = -1;
-        int yPos = -1;
-
-        // move this block of code into a seperate function
-        if (AIlevel == 1) {
-            while (!isValidPosition) {
-                int randomPos = (int) (Math.random() * 9) + 1;
-
-                switch (randomPos) {
-                    case 1 -> {
-                        xPos = 0;
-                        yPos = 0;
-                    }
-                    case 2 -> {
-                        xPos = 2;
-                        yPos = 0;
-                    }
-                    case 3 -> {
-                        xPos = 4;
-                        yPos = 0;
-                    }
-                    case 4 -> {
-                        xPos = 0;
-                        yPos = 2;
-                    }
-                    case 5 -> {
-                        xPos = 2;
-                        yPos = 2;
-                    }
-                    case 6 -> {
-                        xPos = 4;
-                        yPos = 2;
-                    }
-                    case 7 -> {
-                        xPos = 0;
-                        yPos = 4;
-                    }
-                    case 8 -> {
-                        xPos = 2;
-                        yPos = 4;
-                    }
-                    case 9 -> {
-                        xPos = 4;
-                        yPos = 4;
-                    }
-                    default -> {
-                        exit(false, "It's a tie!");
-                    }
-                }
-
-                if (court[yPos][xPos] == ' ') {
-                    isValidPosition = true;
-                }
-            }
-        } else if (AIlevel > 1) {
-            exit(true, "AI level not implemented yet.");
-        }
-
-        court[yPos][xPos] = playerAI;
-
-        return court;
-    }
-
-    public static void moveAI(char[][] court) {
+    public static void moveAI(int[][] court) {
         System.out.print("[" + moveCount + "]: It's the AIs turn: ");
 
-        court = moveAlgorithm(court);
+        boolean isValidPos = false;
+        boolean isSet = false;
+        
+        if(AIlevel == 3 && moveCount != 1){
+            if((court[0][0] == court[1][1]) || (court[0][0] == court[2][2]) || (court[1][1] == court[2][2])){
+                for(int i = 0; i < court.length; i++){
+                    if(court[i][i] == 0 && !isSet){
+                        isSet = true;
+                        court[i][i] = -1;
+                        System.out.print(convertCoorToPos(i, i));
+                    }
+                }
+            } else if ((court[0][2] == court[1][1]) || (court[0][2] == court[2][0]) || (court[1][1] == court[2][0])){
+                for(int i = 0; i < court.length; i++){
+                    for(int j = 2; j >= 0; j--){
+                        if(court[i][j] == 0 && !isSet){
+                            isSet = true;
+                            court[i][j] = -1;
+                            System.out.print(convertCoorToPos(i, j));
+                        }
+                    }
+                }
+            }
+        } else if (!isSet && AIlevel >= 2 && moveCount != 1){
+            for(int i = 0; i < court.length; i++){
+                if((court[i][0] == court[i][1]) || (court[i][0] == court[i][2]) || (court[i][1] == court[i][2])){
+                    for(int j = 0; j < court.length; j++){
+                        if(court[i][j] == 0 && !isSet){
+                            isSet = true;
+                            court[i][j] = -1;
+                            System.out.print(convertCoorToPos(i, j));
+                        }
+                    } 
+                } else if ((court[0][i] == court[1][i]) || (court[0][i] == court[2][i]) || (court[1][i] == court[2][i])){
+                    for(int j = 0; j < court.length; j++){
+                        if(court[i][j] == 0 && !isSet){
+                            isSet = true;
+                            court[i][j] = -1;
+                            System.out.print(convertCoorToPos(i, j));
+                        }
+                    }
+                }
+            }
+        } else if ((!isSet && AIlevel >= 1) || moveCount == 1){
+            while (!isValidPos) {
+                int randomPos = (int) (Math.random() * 9) + 1;
+                int[] tempPos = convertPosToCoor(randomPos);
+                int xPos = tempPos[0];
+                int yPos = tempPos[1];
+    
+                if (court[xPos][yPos] == 0 && !isSet) {
+                    isValidPos = true;
+                    court[xPos][yPos] = -1;
+                    System.out.print(randomPos);
+                }
+            }
+        }
 
-        System.out.println("\n" + divider);
+        System.out.println("\n\n" + divider);
 
         moveCount++;
 
@@ -278,7 +297,7 @@ public class TicTacToe {
                 System.out.println();
                 printCourt(court);
                 System.out.println();
-                movePlayer0(court);
+                movePlayer(0, court);
             }
             case "tie" -> {
                 System.out.println();
@@ -289,20 +308,19 @@ public class TicTacToe {
             default -> {
                 System.out.println();
                 printCourt(court);
-                System.out.println();
-                // include replayMenu
-                exit(false, "The AI won!");
+                System.out.println("\nThe AI won!");
+                replayMenu();
             }
         }
     }
 
     public static void movePlayer(int turn, int[][] court) {
-        if (playWithAI) {
-            System.out.print("[" + moveCount + "]: It's the players turn [Position: 1-9]: ");
-        } else if (turn == 1) {
-            System.out.print("[" + moveCount + "]: " + namePlayer1 + ", it's your turn [Position: 1-9]: ");
+        if (playWithAI && turn == 0) {
+            System.out.print("[" + moveCount + "]: It's the players turn: ");
+        } else if (!playWithAI && turn == 1) {
+            System.out.print("[" + moveCount + "]: " + namePlayer1 + ", it's your turn: ");
         } else {
-            System.out.print("[" + moveCount + "]: " + namePlayer2 + ", it's your turn [Position: 1-9]: ");
+            System.out.print("[" + moveCount + "]: " + namePlayer2 + ", it's your turn: ");
         }
 
         int inputPos = scanner.nextInt();
@@ -312,14 +330,15 @@ public class TicTacToe {
             movePlayer(turn, court);
         }
 
-        int xPos = inputPos % 3;
-        int yPos = inputPos / 3;
+        int tempPos[] = convertPosToCoor(inputPos);
+        int xPos = tempPos[0];
+        int yPos = tempPos[1];
 
         if (court[xPos][yPos] == 0) {
-            if (turn == 1) {
+            if (turn == 1 || turn == 0) {
                 court[xPos][yPos] = 1;
             } else {
-                court[xPos][yPos] = 2;
+                court[xPos][yPos] = -1;
             }
         } else {
             System.out.println("The selected index is already reserved.\n");
@@ -361,12 +380,56 @@ public class TicTacToe {
         }
     }
 
-    public static void pause(long timeInMilliSeconds) {
-        long timestamp = System.currentTimeMillis();
+    public static int[] convertPosToCoor(int pos) {
+        int[] cP = new int[2];
+        switch (pos) {
+            case 1 -> {
+                cP[0] = 0;
+                cP[1] = 0;
+            }
+            case 2 -> {
+                cP[0] = 0;
+                cP[1] = 1;
+            }
+            case 3 -> {
+                cP[0] = 0;
+                cP[1] = 2;
+            }
+            case 4 -> {
+                cP[0] = 1;
+                cP[1] = 0;
+            }
+            case 5 -> {
+                cP[0] = 1;
+                cP[1] = 1;
+            }
+            case 6 -> {
+                cP[0] = 1;
+                cP[1] = 2;
+            }
+            case 7 -> {
+                cP[0] = 2;
+                cP[1] = 0;
+            }
+            case 8 -> {
+                cP[0] = 2;
+                cP[1] = 1;
+            }
+            case 9 -> {
+                cP[0] = 2;
+                cP[1] = 2;
+            }
+            default -> {
+                cP[0] = -1;
+                cP[1] = -1;
+            }
+        }
 
-        do {
-            //nothing
-        } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
+        return cP;
+    }
+
+    public static int convertCoorToPos(int xPos, int yPos) {
+        return xPos * 3 + yPos + 1;
     }
 
     public static void exit(boolean isError, String reason) {
@@ -381,6 +444,15 @@ public class TicTacToe {
     public static void replayMenu() {
         System.out.print("\nDo you want to play another game? [1/0]: ");
         if (scanner.nextInt() == 1) {
+            if (!playWithAI) {
+                System.out.print("Are the same players playing? [1/0]: ");
+                if (scanner.nextInt() == 0) {
+                    namePlayer1 = "Player 1";
+                    namePlayer2 = "Player 2";
+                    System.out.print("Player names can be changed in the settings.");
+                }
+            }
+
             startGame();
         } else {
             exit(false, "Game session terminated.");
