@@ -29,7 +29,7 @@ public class TicTacToe {
             AIlevel = 1;
         }
 
-        if(!playWithAI){
+        if (!playWithAI) {
             namePlayer1 = "1";
             namePlayer2 = "2";
         } else {
@@ -71,18 +71,6 @@ public class TicTacToe {
                     namePlayer2 = temp;
                 }
             }
-        } else {
-            System.out.print("Edit Player name? [0/1]: ");
-            if (scanner.nextInt() == 1) {
-                scanner.nextLine();
-                System.out.print("  Enter name for the player: ");
-                String temp = scanner.nextLine();
-                if(temp.equals("AI")){
-                    exit(true, "Can't have two players with the same name.");
-                } else {
-                    namePlayer1 = temp;
-                }
-            }
         }
 
         if (playWithAI) {
@@ -118,20 +106,52 @@ public class TicTacToe {
         System.out.println();
 
         switch (startWith) {
-            case 0 -> moveAI(court);
-            default -> movePlayer(startWith, court);
+            case 0 ->
+                moveAI(court);
+            default ->
+                movePlayer(startWith, court);
         }
     }
 
     public static void printCourt(int[][] court) {
         char[][] pC = new char[17][17];
 
-        if(!playWithAI){
+        //blueprint
+        // ...
+        if (court[0][0] != 0) {
+            pC = drawChar(pC, 0, 0, court[0][0]);
+        } else if (court[0][1] != 0) {
+            pC = drawChar(pC, 6, 0, court[0][1]);
+        } else if (court[0][2] != 0) {
+            pC = drawChar(pC, 12, 0, court[0][2]);
+        } else if (court[1][0] != 0) {
+            pC = drawChar(pC, 0, 6, court[1][0]);
+        } else if (court[1][1] != 0) {
+            pC = drawChar(pC, 6, 6, court[1][1]);
+        } else if (court[1][2] != 0) {
+            pC = drawChar(pC, 12, 6, court[1][2]);
+        } else if (court[2][0] != 0) {
+            pC = drawChar(pC, 0, 12, court[2][0]);
+        } else if (court[2][1] != 0) {
+            pC = drawChar(pC, 6, 12, court[2][1]);
+        } else if (court[2][2] != 0) {
+            pC = drawChar(pC, 12, 12, court[2][2]);
+        }
 
+        for (int i = 0; i < pC.length; i++) {
+            for (int j = 0; j < pC[i].length; j++) {
+                System.out.print(pC[i][j]);
+            }
+            System.out.println();
         }
     }
 
-    public static char[][] drawChar(char[][] pC, int xOffset, int yOffset){
+    public static char[][] drawChar(char[][] pC, int xO, int yO, int num) {
+        if (!playWithAI) {
+            // ...
+        } else {
+            // ...
+        }
 
         return pC;
     }
@@ -277,9 +297,9 @@ public class TicTacToe {
     }
 
     public static void movePlayer(int turn, int[][] court) {
-        if(playWithAI){
+        if (playWithAI) {
             System.out.print("[" + moveCount + "]: It's the players turn [Position: 1-9]: ");
-        } else if(turn == 1) {
+        } else if (turn == 1) {
             System.out.print("[" + moveCount + "]: " + namePlayer1 + ", it's your turn [Position: 1-9]: ");
         } else {
             System.out.print("[" + moveCount + "]: " + namePlayer2 + ", it's your turn [Position: 1-9]: ");
@@ -296,7 +316,7 @@ public class TicTacToe {
         int yPos = inputPos / 3;
 
         if (court[xPos][yPos] == 0) {
-            if(turn == 1){
+            if (turn == 1) {
                 court[xPos][yPos] = 1;
             } else {
                 court[xPos][yPos] = 2;
@@ -315,7 +335,7 @@ public class TicTacToe {
             case "null" -> {
                 System.out.println();
                 if (!playWithAI) {
-                    if(turn == 1){
+                    if (turn == 1) {
                         movePlayer(2, court);
                     } else {
                         movePlayer(1, court);
@@ -343,7 +363,7 @@ public class TicTacToe {
 
     public static void pause(long timeInMilliSeconds) {
         long timestamp = System.currentTimeMillis();
-    
+
         do {
             //nothing
         } while (System.currentTimeMillis() < timestamp + timeInMilliSeconds);
