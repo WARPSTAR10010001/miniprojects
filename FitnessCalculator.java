@@ -1,6 +1,6 @@
 //Boo!!
 
-package FitnessCalculatorPlus;
+
 
 import java.util.Scanner;
 
