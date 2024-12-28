@@ -1,5 +1,7 @@
 //Boo!!
 
+package FitnessCalculatorPlus;
+
 import java.util.Scanner;
 
 public class FitnessCalculator {
