@@ -6,7 +6,7 @@ public class FirstSemesterStudent extends Student {
     private int currentSemester;
 
     public FirstSemesterStudent(int age, String name, boolean isMale, int studentID, int currentSemester){
-        super(age, name, isMale, studentID);
+        super(age, name, isMale);
         this.currentSemester = currentSemester;
     }
 
