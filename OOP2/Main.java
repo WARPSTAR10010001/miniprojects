@@ -16,8 +16,8 @@ public class Main {
 
         Person [] personArray = {WARPSTAR, UdoLindenberg, Steven, Gurkenfresser, SaddamHussein, FortniteGamer233};
 
-        for(int i = 0; i < personArray.length; i++){
-            System.out.println(personArray[i]);
+        for (Person personArray1 : personArray) {
+            System.out.println(personArray1);
         }
     }
 }
