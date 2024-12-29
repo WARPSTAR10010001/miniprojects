@@ -2,18 +2,16 @@ package OOP2;
 
 class Student extends Person {
     private int studentID;
+    private static int nextStudentID = 1;
 
-    public Student(int age, String name, boolean isMale, int studentID){
+    public Student(int age, String name, boolean isMale){
         super(age, name, isMale);
-        this.studentID = studentID;
+        this.studentID = nextStudentID;
+        nextStudentID++;
     }
 
-    public int getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public int getStudentID(){
+        return this.studentID;
     }
 
     @Override
