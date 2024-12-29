@@ -1,3 +1,4 @@
+package Sandbox;
 //Boo!!
 
 public class Sandbox {
