@@ -8,8 +8,8 @@ public class Artikel {
     private double mwstsatz;
 
     public Artikel(){
-        this.name = null;
-        this.preis = 0;
+        this.name = "N/A";
+        this.preis = -1;
         this.mwstsatz = 0;
     }
 
