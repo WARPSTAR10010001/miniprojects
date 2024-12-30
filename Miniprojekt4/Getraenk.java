@@ -3,19 +3,19 @@
 package Miniprojekt4;
 
 public class Getraenk extends Artikel{
-    private double pfand;
+    private double pfand = 0.25;
 
     public Getraenk(){
         super();
         this.pfand = 0;
     }
 
-    public Getraenk(String name, double preis, double mwstsatz, double pfand){
+    public Getraenk(String name, double preis, double mwstsatz){
         super(name, preis, mwstsatz);
-        this.pfand = pfand;
+        this.pfand = 0.25;
     }
 
-    public double getPfand(){
+    private double getPfand(){
         return this.pfand;
     }
 
@@ -24,5 +24,7 @@ public class Getraenk extends Artikel{
     }
 
     @Override
-    
+    public String toString(){
+        return getName() + " - " + getPreis() +  " Euro (inkl. " + this.pfand + ") (inkl. " + berechneMwst() + " Euro Mwst.)";
+    }
 }
