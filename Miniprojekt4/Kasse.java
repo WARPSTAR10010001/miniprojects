@@ -1,6 +1,6 @@
 //Boo!!
 
-package Miniprojekt4;
+//package Miniprojekt4;
 
 public class Kasse {
 }
