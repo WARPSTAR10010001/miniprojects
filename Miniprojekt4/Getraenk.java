@@ -1,6 +1,6 @@
 //Boo!!
 
-package Miniprojekt4;
+//package Miniprojekt4;
 
 public class Getraenk extends Artikel{
     private double pfand = 0.25;
@@ -15,11 +15,11 @@ public class Getraenk extends Artikel{
         this.pfand = 0.25;
     }
 
-    private double getPfand(){
+    public double getPfand(){
         return this.pfand;
     }
 
-    private void setPfand(double pfand){
+    public void setPfand(double pfand){
         this.pfand = pfand;
     }
 
