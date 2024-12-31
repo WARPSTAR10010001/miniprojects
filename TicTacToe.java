@@ -28,7 +28,7 @@ public class TicTacToe {
         System.out.print("Play with AI? [0/1]: ");
         if (scanner.nextInt() == 1) {
             playWithAI = true;
-            AIlevel = 1;
+            AIlevel = 3;
         }
 
         System.out.print("\nEdit settings? [0/1]: ");
