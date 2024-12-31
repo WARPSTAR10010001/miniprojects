@@ -1,5 +1,7 @@
 # miniprojects
 
+//Boo!!
+
 **Welcome to my "miniprojects"-Repo!** 
 
 I will publish some experimental and "made-for-fun" Java and C++ programs here. 
