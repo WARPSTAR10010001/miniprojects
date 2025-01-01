@@ -1,6 +1,6 @@
 //Boo!!
 
-package mp4;
+package Miniprojekt4;
 
 public class Menu extends Artikel{
     private boolean vegetarisch;
