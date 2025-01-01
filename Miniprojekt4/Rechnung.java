@@ -1,6 +1,6 @@
 //Boo!!
 
-package mp4;
+package Miniprojekt4;
 
 public class Rechnung {
 }
