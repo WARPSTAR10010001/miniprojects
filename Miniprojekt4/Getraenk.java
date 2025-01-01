@@ -1,6 +1,6 @@
 //Boo!!
 
-package mp4;
+package Miniprojekt4;
 
 public class Getraenk extends Artikel{
     private double pfand = 0.25;
