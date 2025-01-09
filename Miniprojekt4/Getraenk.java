@@ -2,7 +2,7 @@
 
 package Miniprojekt4;
 
-public class Getraenk extends Artikel{
+public class Getraenk extends Artikel {
     private double pfand = 0.25;
 
     public Getraenk(){
