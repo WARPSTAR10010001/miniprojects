@@ -4,13 +4,27 @@ import java.util.Scanner;
 
 public class FitnessCalculator {
 
+	//Global variables
 	static Scanner scanner = new Scanner(System.in);
 	static String divider = "----------------------------------------";
-	static String exit = "\nProgram terminated.";
+	static String version = "1.5";
+	static String lastUpdate = "09.01.24";
+
+	//User variables
+	static boolean setWeight;
+	static double weight;
+	static boolean setHeight;
+	static double height;
+	static boolean setHip;
+	static double hip;
+	static boolean setWaist;
+	static double waist;
+	static boolean setChest;
+	static double chest;
 
 	public static void main(String[] args) {
-
-		System.out.println("FITNESS CALCULATOR\n");
+		System.out.println("++++FITNESS CALCULATOR++++");
+		System.out.println("Version: " + version + " / Last Updated: " + lastUpdate + "\n");
 
 		selection();
 	}
@@ -20,33 +34,36 @@ public class FitnessCalculator {
 		System.out.println("Please select a calculator:");
 		System.out.println("[0]: Exit");
 		System.out.println("[1]: Body-Mass-Index Calculator");
-		System.out.println("[2]: Waist-Hip-Ratio Calculator");
-		System.out.println("[3]: Waist-Chest-Ratio Calculator");
+		System.out.println("[2]: Optimal Weight Calculator");
+		System.out.println("[3]: Waist-Hip-Ratio Calculator");
+		System.out.println("[4]: Waist-Chest-Ratio Calculator");
 
 		System.out.println();
 
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
 
+		if(selection >= 1 || selection <= 4){
+			System.out.println("\n" + divider + "\n");
+		}
+
         switch(selection){
             case 0:
-            System.out.print(exit);
-            System.exit(0);
+            exit(false, "Session terminated.");
             case 1:
-            System.out.println("\n" + divider + "\n");
             bmi();
             break;
             case 2:
-            System.out.println("\n" + divider + "\n");
             whr();
             break;
-            case 3:
-            System.out.println("\n" + divider + "\n");
+			case 3:
+			owc();
+			break;
+            case 4:
             wcr();
             break;
             default:
-            System.out.print("\nInvalid selection.");
-            System.exit(0);
+            exit(true, "Invalid selection");
         }
 	}
 
@@ -61,8 +78,7 @@ public class FitnessCalculator {
 			System.out.println();
 			selection();
 		} else {
-			System.out.print(exit);
-			System.exit(0);
+			exit(false, "Session terminated.");
 		}
 	}
 
@@ -98,6 +114,10 @@ public class FitnessCalculator {
 		} else {
 			return "This is classed as obese [level III].";
 		}
+	}
+
+	public static void owc(){
+		//...
 	}
 
 	public static void whr() {
@@ -150,5 +170,17 @@ public class FitnessCalculator {
 		} else {
 			return "This is considered unathletic.";
 		}
+	}
+
+	public static void exit(boolean isError, String reason){
+		int systemStatus;
+		if(isError){
+			System.out.print("\nError: " + reason);
+			systemStatus = 1;
+		} else {
+			System.out.print(reason);
+			systemStatus = 0;
+		}
+		System.exit(systemStatus);
 	}
 }
