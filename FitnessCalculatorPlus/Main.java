@@ -13,7 +13,7 @@ public class Main {
     }
 
     //Add selection, continueSelection and exit functions in the Main.java class
-    //Remove local storage of user information in the Calculator.java class and use UserInput.java instead, also transfer the resetValues function
+    //Remove local storage of user information in the Calculator.java class and use UserData.java instead, also transfer the resetValues function
     //Add boolean control to calculators in Calculator.java
     //Implement the optimalWeight and turboCalculator functions in the Calculator.java class
 }
