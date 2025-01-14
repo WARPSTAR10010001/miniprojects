@@ -19,30 +19,25 @@ public class ArrayDelete {
 	 */
 
 	public static int[] deleteElements(int[] a, int wert) {
+		int count = 0;
 		int[] temp = new int [a.length];
 		Arrays.fill(temp, Integer.MIN_VALUE);
 
 		for(int i = 0; i < a.length; i++){
 			if(a[i] != wert){
 				temp[i] = a[i];
-			}
-		}
-
-		int count = 0;
-
-		for(int i = 0; i < temp.length; i++){
-			if(temp[i] != Integer.MIN_VALUE){
 				count++;
 			}
 		}
 
-		int[] result = new int [count];
+		int[] result = new int[count];
 
-		int init = 0;
+		int index = 0;
+
 		for(int i = 0; i < temp.length; i++){
 			if(temp[i] != Integer.MIN_VALUE){
-				result[init] = temp[i];
-				init++;
+				result[index] = temp[i];
+				index++;
 			}
 		}
 
