@@ -9,7 +9,7 @@ public class SleepTime {
         System.out.println("+++SLEEP TIME TEST+++\n");
 
         System.out.print("Start test? [0/1]: ");
-        if(scanner.nextInt() == 0){
+        if(scanner.nextInt() != 1){
             exit(false, "Test terminated.");
         }
 
