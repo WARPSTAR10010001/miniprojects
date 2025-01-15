@@ -24,7 +24,7 @@ public class Menu extends Artikel{
         this.beschreibung = beschreibung;
     }
 
-    public boolean getVegetarisch(){
+    public boolean isVegetarisch(){
         return this.vegetarisch;
     }
 
