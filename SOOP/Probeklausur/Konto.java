@@ -95,6 +95,7 @@ public class Konto {
 	 *
 	 * @return Stringdarstellung des Kontos
 	 */
+	@Override
 	public String toString() {
 		return String.format("[%2d]: %10.2f (%4.0f)%n", this.nummer, this.guthaben, this.dispo);
 	}
