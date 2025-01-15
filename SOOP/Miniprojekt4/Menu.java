@@ -1,6 +1,6 @@
 //Boo!!
 
-package Miniprojekt4;
+//package Miniprojekt4;
 
 public class Menu extends Artikel{
     private boolean vegetarisch;
@@ -24,35 +24,35 @@ public class Menu extends Artikel{
         this.beschreibung = beschreibung;
     }
 
-    public boolean isVegetarisch(){
-        return this.vegetarisch;
+    public boolean isVegetarisch() {
+        return vegetarisch;
     }
 
-    public void setVegetarisch(boolean vegetarisch){
+    public void setVegetarisch(boolean vegetarisch) {
         this.vegetarisch = vegetarisch;
     }
 
-    public int getKalorien(){
-        return this.kalorien;
+    public int getKalorien() {
+        return kalorien;
     }
 
-    public void setKalorien(int kalorien){
+    public void setKalorien(int kalorien) {
         this.kalorien = kalorien;
     }
 
-    public Getraenk getGetraenk(){
-        return this.getraenk;
+    public Getraenk getGetraenk() {
+        return getraenk;
     }
 
-    public void setGetraenk(Getraenk getraenk){
+    public void setGetraenk(Getraenk getraenk) {
         this.getraenk = getraenk;
     }
 
-    public String getBeschreibung(){
-        return this.beschreibung;
+    public String getBeschreibung() {
+        return beschreibung;
     }
 
-    public void setBeschreibung(String beschreibung){
+    public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }
 
