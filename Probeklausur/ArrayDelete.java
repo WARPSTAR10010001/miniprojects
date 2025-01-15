@@ -31,7 +31,6 @@ public class ArrayDelete {
 		}
 
 		int[] result = new int[count];
-
 		int index = 0;
 
 		for(int i = 0; i < temp.length; i++){
