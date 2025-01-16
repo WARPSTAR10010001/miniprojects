@@ -11,7 +11,7 @@ public class FitnessCalculator {
 	public static void main(String[] args) {
 
 		System.out.println("FITNESS CALCULATOR");
-		System.out.println("(Use FitnessCalculatorPlus for advanced calculations)\n");
+		System.out.println("\n\nThis is the very first iteration of this program (Created on the 19.12.'24)\n\nIf you want advanced calculations, a better UI and better data management,\nplease use the project in the repo 'https://github.com/Warpstar10010001/FitnessCalculatorPlus'\n");
 		selection();
 	}
 
