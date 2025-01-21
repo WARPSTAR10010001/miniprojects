@@ -20,7 +20,7 @@ public class RandomStuff {
         System.out.println("[1]: Even-Or-Odd");
         System.out.println("[2]: Square Root");
         System.out.println("[3]: Power of -1");
-        System.out.println("[4]: The glass maze");
+        System.out.println("[4]: Base 2 Calc");
 
         System.out.print("\nSelection: ");
 
@@ -38,7 +38,7 @@ public class RandomStuff {
             powerOfMinusOne();
             case 4:
             System.out.println("\n" + divider);
-            glassMaze();
+            baseTwo();
             default:
             exit(true, "Invalid selection.");
         }
@@ -81,10 +81,10 @@ public class RandomStuff {
         selection(false);
     }
 
-    public static void glassMaze(){
-        System.out.println("\nThe glass maze:\n");
+    public static void baseTwo(){
+        System.out.println("\n2^n:\n");
 
-        System.out.print("Amount of tiles: ");
+        System.out.print("Power: ");
         int n = scanner.nextInt();
 
         System.out.print("Result: " + (int) Math.pow(2, n) + "\n");
