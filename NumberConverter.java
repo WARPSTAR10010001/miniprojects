@@ -23,7 +23,7 @@ public class NumberConverter {
             exit("Base of input and output are the same.");
         }
 
-        System.out.print("\nInput number:  ");
+        System.out.print("\nInput number: ");
         String iNumber = (scanner.nextLine()).toUpperCase();
         String oNumber = null;
 
