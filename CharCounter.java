@@ -19,7 +19,7 @@ public class CharCounter {
         } else {
             while ((pos = line.indexOf(character, pos)) != -1) {
                 count++;
-                pos++;  // Move past the current character
+                pos++;
             }
         }
         System.out.println("Total count: " + count);
