@@ -21,6 +21,7 @@ public class RandomStuff {
         System.out.println("[2]: Square Root");
         System.out.println("[3]: Power of -1");
         System.out.println("[4]: Base 2 Calc");
+        System.out.println("[5]: Check Prime");
 
         System.out.print("\nSelection: ");
 
@@ -39,6 +40,9 @@ public class RandomStuff {
             case 4:
             System.out.println("\n" + divider);
             baseTwo();
+            case 5:
+            System.out.println("\n" + divider);
+            checkPrime();
             default:
             exit(true, "Invalid selection.");
         }
@@ -91,6 +95,33 @@ public class RandomStuff {
 
         selection(false);
     }
+    
+    public static void checkPrime() {
+        System.out.println("\nCheck Prime:\n");
+    
+        System.out.print("Number: ");
+        int n = scanner.nextInt();
+        boolean prime = true;
+    
+        if (n < 2) {
+            prime = false;
+        } else {
+            for (int i = 2; i * i <= n; i++) {
+                if (n % i == 0) {
+                    prime = false;
+                    break;
+                }
+            }
+        }
+    
+        if (prime) {
+            System.out.println("\nThe given number is a prime number.");
+        } else {
+            System.out.println("\nThe given number is not a prime number.");
+        }
+    
+        selection(false);
+    }    
 
     public static void exit(boolean isError, String reason){
         if(isError){
