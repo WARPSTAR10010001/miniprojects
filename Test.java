@@ -10,15 +10,21 @@ public class Test {
         Prof zimmer = new Prof("F. Zimmer", "männlich", 55);
         
         Student warpstar = new Student("WARPSTAR", 18, "weiberlich");
+        Student dividenick = new Student(warpstar);
         Student herbert = new Student("Herbert", 19, "männlich");
         Student bomboclaat = new Student("Bomboclaat", 21, "männlich");
         
         Mitarbeiter lennartz = new Mitarbeiter("F. Lennartz", 31, "männlich");
 
+        dividenick.setGeschlecht("männlich");
+        dividenick.setName("DivideNick");
+        
         gruppe.add(richter);
         gruppe.add(greveler);
         gruppe.add(zimmer);
+
         gruppe.add(warpstar);
+        gruppe.add(dividenick);
         gruppe.add(herbert);
         gruppe.add(bomboclaat);
         gruppe.add(lennartz);
@@ -83,7 +89,7 @@ abstract class Mensch {
         this.name = name;
     }
 
-    public Mensch(){
+    public Mensch() {
         this(null, null, 0);
     }
 
@@ -93,8 +99,12 @@ abstract class Mensch {
         this.geschlecht = geschlecht;
     }
 
+    public Mensch(Mensch other) {
+        this(other.name, other.geschlecht, other.alter);
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return getName() + " / " + getAlter() + " / " + getGeschlecht();
     }
 }
@@ -117,6 +127,11 @@ class Prof extends Mensch implements introducable {
         this.nr = nextNr++;
     }
 
+    public Prof(Prof other) {
+        super(other);
+        this.nr = other.nr;
+    }
+
     @Override
     public String toString() {
         return super.toString() + " / Prof-Nr: " + nr;
@@ -132,11 +147,11 @@ class Student extends Mensch implements introducable {
     private static int nextMatnr = 1;
     private int matnr;
 
-    public int getMatnr(){
+    public int getMatnr() {
         return matnr;
     }
 
-    public void setMatnr(int matnr){
+    public void setMatnr(int matnr) {
         this.matnr = nextMatnr++;
     }
 
@@ -145,33 +160,37 @@ class Student extends Mensch implements introducable {
         this.matnr = nextMatnr++;
     }
 
-    public Student(String name, int alter, String geschlecht){
+    public Student(String name, int alter, String geschlecht) {
         super(name, geschlecht, alter);
         this.matnr = nextMatnr++;
     }
 
+    public Student(Student other) {
+        super(other);
+        this.matnr = other.matnr;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " / Matrikelnummer: " + getMatnr();
     }
 
     @Override
-    public String vorstellen(){
+    public String vorstellen() {
         return "Hallo, ich bin Student, ich heiße " + getName() + ", ich bin " + getAlter() + " Jahre alt und bin " + getGeschlecht() + ". Meine Matrikelnummer ist " + getMatnr() + ".";
     }
 }
 
-class Mitarbeiter extends Mensch implements introducable {
-    public Mitarbeiter(){
+class Mitarbeiter extends Mensch {
+    public Mitarbeiter() {
         super();
     }
 
-    public Mitarbeiter(String name, int alter, String geschlecht){
+    public Mitarbeiter(String name, int alter, String geschlecht) {
         super(name, geschlecht, alter);
     }
 
-    @Override
-    public String vorstellen(){
-        return "Hallo, ich bin Mitarbeiter, ich heiße " + getName() + ", ich bin " + getAlter() + " Jahre alt und bin " + getGeschlecht();
+    public Mitarbeiter(Mitarbeiter other) {
+        super(other);
     }
 }
