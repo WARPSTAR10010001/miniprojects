@@ -77,7 +77,11 @@ public class GuessingGame {
                 }
                 guess = scanner.nextInt();
                 if (guess != randomNum) {
-                    System.out.print(freaky[(int) (Math.random() * 11)] + "\n");
+                    if(guess == 69){
+                        System.out.println("i know what u think uwu~~~~");
+                    } else {
+                        System.out.print(freaky[(int) (Math.random() * 10)] + "\n");
+                    }
                 }
                 if (guess > randomNum) {
                     System.out.println("nuh uh, give me a lower number");
