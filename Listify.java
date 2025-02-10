@@ -17,7 +17,6 @@ public class Listify {
     static boolean isAdmin = false;
     static ArrayList<String> tasks = new ArrayList<>();
 
-
     public static void main(String[] args) {
         init();
 
@@ -36,7 +35,7 @@ public class Listify {
     }
 
     public static void init(){
-        //initiate options menu
+        //Initiate options menu
         option[0] = "Admin Mode";
         option[1] = "Print list";
         option[2] = "Add task";
@@ -53,7 +52,6 @@ public class Listify {
                 //Add other error messages if needed
                 default -> {}
             }
-
             System.out.println(msg);
         } else {
             System.out.println("Session terminated");
