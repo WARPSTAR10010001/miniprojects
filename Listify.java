@@ -8,14 +8,15 @@ public class Listify {
     static Scanner scanner = new Scanner(System.in);
 
     //Final variables:
-    static final String LASTUPDATE = "08.02.2025";
-    static final String VERSION = "1.0 Alpha";
+    static final String LASTUPDATE = "10.02.2025";
+    static final String VERSION = "1.1 Alpha";
     static final String DIVIDER = "\n--------------------------------------------\n";
 
     //Global variables:
     static String[] option = new String[5];
     static boolean isAdmin = false;
     static ArrayList<String> tasks = new ArrayList<>();
+    static ArrayList<Integer> priority = new ArrayList<>();
 
     public static void main(String[] args) {
         init();
@@ -23,15 +24,32 @@ public class Listify {
         System.out.println("++++++++++ LISTIFY ++++++++++");
         System.out.println("Version: " + VERSION + " / Last Updated: " + LASTUPDATE);
 
+        System.out.println();
+        
+        tasks.add("Tu irgendwas oder so");
+        priority.add(4);
+
         menu();
     }
 
     public static void menu(){
-        
+        printList();
     }
 
     public static void printList(){
+        for(int i = 0; i < tasks.size(); i++){
+            System.out.println("[" + (i + 1) + "]: " + tasks.get(i) + " [Priority: " + priorityConversion(priority.get(i)) + "]");
+        }
+    }
 
+    public static String priorityConversion(Integer i){
+        return switch(i){
+            case 0 -> "LOW";
+            case 1 -> "MIDDLE";
+            case 2 -> "HIGH";
+            case 3 -> "VERY HIGH";
+            default -> "UNDEFINED";
+        };
     }
 
     public static void init(){
