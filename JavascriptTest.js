@@ -13,8 +13,8 @@ if (integer == string){
 //Checks if value && datatype is equal
 console.log("\nTriple === Check")
 
-if (integer == string){
-    console.log("this is the actual correct answer")
-} else {
+if (integer === string){
     console.log("bruh what is this language")
+} else {
+    console.log("this is the actual correct answer")
 }
