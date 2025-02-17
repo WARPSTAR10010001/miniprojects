@@ -1,3 +1,5 @@
+//Boo!!
+
 const integer = 145
 const string = "145"
 
@@ -18,3 +20,6 @@ if (integer === string){
 } else {
     console.log("this is the actual correct answer")
 }
+
+const numbers = [10, 8, 13, 15];
+console.log(numbers); // [10, 8, 13, 15, 20];
